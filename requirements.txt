@@ -6,3 +6,4 @@ numpy>=1.26.0
 scikit-learn>=1.4.0
 setuav-pythrust>=0.1.0
 gpiozero>=2.0; sys_platform == "linux"
+psutil>=5.9.0

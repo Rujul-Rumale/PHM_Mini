@@ -12,6 +12,10 @@ def create_app(monitor):
     def api_latest():
         return jsonify(monitor.status_snapshot())
 
+    @app.route("/api/system")
+    def api_system():
+        return jsonify(monitor.get_system_info())
+
     @app.route("/api/health")
     def api_health():
         snap = monitor.status_snapshot()

@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.env
+logs/
+data/flights/
+data/blackbox/fault_*.json
+data/baselines/last_state.json
+*.db

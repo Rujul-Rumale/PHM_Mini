@@ -1,7 +1,7 @@
 [project]
 name = "drone-fault-monitor"
-version = "0.1.0"
-description = "Threshold-based battery and motor fault detection for RPi with INA226 sensors"
+version = "0.2.0"
+description = "UAV PHM Monitor — Raspberry Pi deployment-ready with multithread architecture"
 requires-python = ">=3.11"
 dependencies = [
     "smbus2>=0.4.3",
@@ -12,6 +12,7 @@ dependencies = [
     "scikit-learn>=1.4.0",
     "setuav-pythrust>=0.1.0",
     "gpiozero>=2.0; sys_platform == 'linux'",
+    "psutil>=5.9.0",
 ]
 
 [project.optional-dependencies]

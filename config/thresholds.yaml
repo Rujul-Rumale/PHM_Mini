@@ -37,9 +37,10 @@ esc:
   thermal_efficiency_critical: 3.75 # °C/A, baseline * 1.5 = critical
 
 system:
-  poll_interval_ms: 100           # ms (10 Hz)
-  log_interval_ms: 500            # 2 Hz to DB
+  fast_loop_ms: 25                # ms (40 Hz — sensor reads, safety, blackbox buffer)
+  health_loop_ms: 1000            # ms (1 Hz — features, diagnostics, health engine)
+  log_interval_ms: 1000           # ms (1 Hz to DB)
   fault_persistence_count: 3      # consecutive readings before fault declared
-  db_path: "logs/telemetry.db"
+  db_path: "logs/telemetry.db"    # fallback; data/flights/ preferred in deployment
   log_level: "INFO"
   simulate: false                 # set true to use mock sensor data (no hardware needed)

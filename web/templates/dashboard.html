@@ -114,7 +114,24 @@
 
 <div class="container">
 
-<div id="tab-monitor" class="tab-content active">
+  <div id="tab-monitor" class="tab-content active">
+
+  <section>
+    <h2>Pi Health</h2>
+    <div class="grid-auto" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="metric"><span class="metric-label">CPU Temp</span><span><span class="metric-value" id="pi-cpu-temp">--</span><span class="metric-unit">°C</span></span></div>
+      <div class="metric"><span class="metric-label">RAM</span><span><span class="metric-value" id="pi-ram">--</span><span class="metric-unit">%</span></span></div>
+      <div class="metric"><span class="metric-label">Disk</span><span><span class="metric-value" id="pi-disk">--</span><span class="metric-unit">%</span></span></div>
+      <div class="metric"><span class="metric-label">Uptime</span><span><span class="metric-value" id="pi-uptime">--</span></span></div>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:8px;font-size:12px;color:#757575">
+      <span>Mode: <strong id="pi-mode">--</strong></span>
+      <span>Flight: <strong id="pi-flight">--</strong></span>
+      <span>Platform: <strong id="pi-platform">--</strong></span>
+      <span>Batt: <strong id="pi-batt-status">--</strong></span>
+      <span>IMU: <strong id="pi-imu-status">--</strong></span>
+    </div>
+  </section>
 
   <section>
     <h2>Controls</h2>
@@ -267,6 +284,26 @@ function switchTab(name) {
 
 async function sendCmd(cmd) {
   try { await fetch('/api/' + cmd, { method: 'POST' }); } catch(e) { console.warn(cmd, e); }
+}
+
+async function pollSystem() {
+  try {
+    const r = await fetch('/api/system');
+    const d = await r.json();
+    if (!d) return;
+    document.getElementById('pi-cpu-temp').textContent = d.cpu_temp_c != null ? d.cpu_temp_c.toFixed(1) : '--';
+    document.getElementById('pi-ram').textContent = d.ram ? d.ram.percent : '--';
+    document.getElementById('pi-disk').textContent = d.disk ? d.disk.percent : '--';
+    const up = d.uptime_s || 0;
+    const hrs = Math.floor(up / 3600);
+    const mins = Math.floor((up % 3600) / 60);
+    document.getElementById('pi-uptime').textContent = hrs + 'h ' + mins + 'm';
+    document.getElementById('pi-mode').textContent = d.mode || '--';
+    document.getElementById('pi-flight').textContent = d.flight_id != null ? d.flight_id.toString().padStart(3,'0') : '--';
+    document.getElementById('pi-platform').textContent = d.platform || '--';
+    document.getElementById('pi-batt-status').textContent = d.sensor_status && d.sensor_status.battery ? 'OK' : 'OFF';
+    document.getElementById('pi-imu-status').textContent = d.sensor_status && d.sensor_status.imu ? 'OK' : 'OFF';
+  } catch(e) { console.warn('System poll error:', e); }
 }
 
 let _throttleSending = false;
@@ -548,7 +585,9 @@ function chartUpdate(d) {
 
 initCharts();
 poll();
+pollSystem();
 setInterval(poll, POLL_MS);
+setInterval(pollSystem, 5000);
 </script>
 </body>
 </html>

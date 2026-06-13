@@ -26,8 +26,9 @@ motors:
   shunt_ohms: 0.01
 
 system:
-  poll_interval_ms: 100
-  log_interval_ms: 500
+  fast_loop_ms: 25
+  health_loop_ms: 1000
+  log_interval_ms: 1000
   fault_persistence_count: 3
   db_path: "logs/telemetry_fw.db"
   log_level: "INFO"

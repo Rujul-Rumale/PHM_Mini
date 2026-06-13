@@ -1,0 +1,52 @@
+{
+    "i2c_bus": 1,
+    "sensors": {
+        "battery_monitor": {
+            "type": "INA226",
+            "address": "0x40",
+            "shunt": 0.001
+        },
+        "propulsion_units": [
+            {
+                "id": 1,
+                "current_sensor": {
+                    "type": "INA226",
+                    "address": "0x41",
+                    "shunt": 0.01
+                },
+                "esc_temperature": null
+            },
+            {
+                "id": 2,
+                "current_sensor": {
+                    "type": "INA226",
+                    "address": "0x42",
+                    "shunt": 0.01
+                },
+                "esc_temperature": null
+            },
+            {
+                "id": 3,
+                "current_sensor": {
+                    "type": "INA226",
+                    "address": "0x43",
+                    "shunt": 0.01
+                },
+                "esc_temperature": null
+            },
+            {
+                "id": 4,
+                "current_sensor": {
+                    "type": "INA226",
+                    "address": "0x44",
+                    "shunt": 0.01
+                },
+                "esc_temperature": null
+            }
+        ],
+        "imu": {
+            "type": "MPU6050",
+            "address": "0x68"
+        }
+    }
+}
