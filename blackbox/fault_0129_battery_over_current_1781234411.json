@@ -1,0 +1,2512 @@
+{
+  "timestamp": 1781234411.033182,
+  "component": "battery",
+  "fault_type": "over_current",
+  "confidence": 0.9,
+  "severity": "critical",
+  "evidence": {
+    "current": 60.5
+  },
+  "before_snapshot": [
+    {
+      "timestamp": 1781234396.878857,
+      "voltage": 11.5848,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234397.031241,
+      "voltage": 11.5761,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234397.135453,
+      "voltage": 11.5743,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234397.2014,
+      "voltage": 11.5728,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234397.311065,
+      "voltage": 11.5713,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234397.812209,
+      "voltage": 11.5698,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234397.905481,
+      "voltage": 11.5683,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234397.975254,
+      "voltage": 11.5611,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234398.157061,
+      "voltage": 11.5593,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234398.257373,
+      "voltage": 11.5578,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234398.390026,
+      "voltage": 11.556,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234398.458018,
+      "voltage": 11.5542,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234398.710422,
+      "voltage": 11.5524,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234398.935156,
+      "voltage": 11.5506,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234399.072709,
+      "voltage": 11.5473,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234399.10407,
+      "voltage": 11.544,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234399.246344,
+      "voltage": 11.5422,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234399.348016,
+      "voltage": 11.5404,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234399.543761,
+      "voltage": 11.5389,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234399.675898,
+      "voltage": 11.5374,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234399.71306,
+      "voltage": 11.5347,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234399.846104,
+      "voltage": 11.5329,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234400.027991,
+      "voltage": 11.5311,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234400.108258,
+      "voltage": 11.5296,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234400.192314,
+      "voltage": 11.5275,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234400.273063,
+      "voltage": 11.526,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234400.505045,
+      "voltage": 11.5245,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234400.584647,
+      "voltage": 11.5227,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234400.728118,
+      "voltage": 11.52,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234400.832476,
+      "voltage": 11.5185,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234400.889518,
+      "voltage": 11.5164,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234401.074296,
+      "voltage": 11.5149,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234401.162321,
+      "voltage": 11.5131,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234401.230453,
+      "voltage": 11.5113,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234401.488358,
+      "voltage": 11.5098,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234401.606042,
+      "voltage": 11.5083,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234401.664815,
+      "voltage": 11.5047,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234401.933238,
+      "voltage": 11.5029,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234402.144567,
+      "voltage": 11.5014,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234402.218109,
+      "voltage": 11.4981,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234402.29128,
+      "voltage": 11.4951,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234402.438045,
+      "voltage": 11.4936,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234402.609287,
+      "voltage": 11.4918,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234402.777974,
+      "voltage": 11.49,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234403.028801,
+      "voltage": 11.4879,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234403.14948,
+      "voltage": 11.4855,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234403.275513,
+      "voltage": 11.4813,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234403.399465,
+      "voltage": 11.4795,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234403.621925,
+      "voltage": 11.478,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234403.906276,
+      "voltage": 11.4759,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234404.035225,
+      "voltage": 11.4711,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234404.133334,
+      "voltage": 11.4681,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234404.29724,
+      "voltage": 11.4663,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234404.485198,
+      "voltage": 11.4645,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234404.612155,
+      "voltage": 11.4621,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234404.766422,
+      "voltage": 11.4594,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234404.940106,
+      "voltage": 11.4573,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234405.056078,
+      "voltage": 11.4549,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234405.136925,
+      "voltage": 11.4522,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234405.225808,
+      "voltage": 11.4507,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234405.477927,
+      "voltage": 11.4492,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234405.644252,
+      "voltage": 11.4474,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234405.673537,
+      "voltage": 11.4438,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234405.811974,
+      "voltage": 11.4417,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234406.000548,
+      "voltage": 11.4399,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234406.213094,
+      "voltage": 11.4384,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234406.242459,
+      "voltage": 11.4357,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234406.378812,
+      "voltage": 11.433,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234406.447268,
+      "voltage": 11.4315,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234406.7381,
+      "voltage": 11.43,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234406.865427,
+      "voltage": 11.4282,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234406.980949,
+      "voltage": 11.4246,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234407.051835,
+      "voltage": 11.4228,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234407.175824,
+      "voltage": 11.4213,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234407.253115,
+      "voltage": 11.4195,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234407.329852,
+      "voltage": 11.418,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234407.590132,
+      "voltage": 11.4165,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234407.773389,
+      "voltage": 11.4147,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234407.974074,
+      "voltage": 11.412,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234408.043442,
+      "voltage": 11.4084,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234408.181831,
+      "voltage": 11.406,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234408.234147,
+      "voltage": 11.4045,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234408.441621,
+      "voltage": 11.403,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234408.580603,
+      "voltage": 11.4012,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234408.692927,
+      "voltage": 11.3988,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234408.731301,
+      "voltage": 11.3967,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234408.935118,
+      "voltage": 11.3949,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234409.064625,
+      "voltage": 11.3934,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234409.529356,
+      "voltage": 11.3913,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234409.65543,
+      "voltage": 11.3853,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234409.969973,
+      "voltage": 11.3823,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234410.11122,
+      "voltage": 11.3802,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234410.177154,
+      "voltage": 11.3757,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234410.251059,
+      "voltage": 11.3733,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234410.49504,
+      "voltage": 11.3718,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234410.565949,
+      "voltage": 11.3703,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234410.641518,
+      "voltage": 11.3676,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234410.749397,
+      "voltage": 11.3658,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234410.848383,
+      "voltage": 11.3643,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    },
+    {
+      "timestamp": 1781234410.943997,
+      "voltage": 11.3628,
+      "current": 60.5,
+      "motor_currents": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "motor_vibrations": [
+        0.4,
+        0.4,
+        0.4,
+        0.4
+      ],
+      "motor_temps": [
+        70.0,
+        70.0,
+        70.0,
+        70.0
+      ],
+      "throttle": 1.0,
+      "temperature": 70.0
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+# Fixed-wing / single-motor config
+# Use: python3 monitor.py --config config/fixed-wing.yaml
+
+battery:
+  cell_count: 4
+  nominal_voltage: 16.8
+  min_voltage: 13.2
+  warn_voltage: 14.0
+  max_current: 40.0
+  warn_current: 30.0
+  max_dv_dt: -2.0
+  soc_warn_percent: 20
+  soc_critical_percent: 10
+  capacity_mah: 3300
+  i2c_address: 0x40
+  shunt_ohms: 0.001
+
+motors:
+  count: 1
+  max_current_per_motor: 17.0
+  warn_current_per_motor: 14.0
+  min_current_armed: 0.5
+  max_imbalance_ratio: 0.40   # unused for single motor
+  i2c_addresses:
+    - 0x41                    # different from battery — single bus OK
+  shunt_ohms: 0.01
+
+system:
+  poll_interval_ms: 100
+  log_interval_ms: 500
+  fault_persistence_count: 3
+  db_path: "logs/telemetry_fw.db"
+  log_level: "INFO"
+  simulate: false
+
+# Optional PyThrust physics-based expected current model
+# Requires: pip install setuav-pythrust
+pythrust:
+  enabled: false
+  motor:
+    kv_rpm_per_v: 1400.0
+    resistance_ohm: 0.100
+    no_load_current_a: 0.5
+    current_max_a: 17.0
+  propeller:
+    diameter_m: 0.1270
+    blade_count: 2
+  battery:
+    voltage_v: 16.8
+    discharge_efficiency: 1.0
+  system:
+    resistance_ohm: 0.05
+
+# I2C wiring notes (fixed-wing, 2x INA226):
+#   Battery sensor:  A1=GND, A0=GND → 0x40  on bus 1 (GPIO 2/3)
+#   Motor sensor:    A1=GND, A0=VCC → 0x41  on bus 1 (GPIO 2/3)
+#   No address conflict → single bus, no TCA9548A needed.
+#
+# If both must use 0x40 (no configurable A-pins):
+#   Enable bus 0: add dtparam=i2c_vc=on to /boot/firmware/config.txt
+#   Motor sensor on bus 0 (GPIO 0/1), battery on bus 1 (GPIO 2/3)
+#   monitor.py auto-detects address conflict and uses dual-bus mode.
+#
+# GPIO 18 → ESC signal (50Hz PWM, 1–2ms pulse)

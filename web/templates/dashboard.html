@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAV DOCTOR</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f5f5f5; color: #1a1a1a; font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 16px; }
+
+  header { background: #fff; border-bottom: 2px solid #e0e0e0; padding: 12px 24px; display: flex; align-items: center; gap: 16px; }
+  header h1 { font-size: 18px; font-weight: 600; color: #333; letter-spacing: 0.5px; }
+  .badge { padding: 2px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+  .badge.OK { background: #e6f7e6; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .badge.WARNING { background: #fff8e1; color: #f57f17; border: 1px solid #ffe082; }
+  .badge.CRITICAL { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  .badge.CALIBRATING { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+  .badge.armed { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  .badge.disarmed { background: #f5f5f5; color: #757575; border: 1px solid #bdbdbd; }
+  #last-update { margin-left: auto; color: #999; font-size: 12px; }
+
+  .tabs { display: flex; gap: 0; background: #fff; border-bottom: 2px solid #e0e0e0; padding: 0 24px; }
+  .tab { padding: 10px 24px; cursor: pointer; font-size: 13px; font-weight: 500; color: #757575; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; }
+  .tab:hover { color: #333; }
+  .tab.active { color: #1565c0; border-bottom-color: #1565c0; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  section { background: #fff; border: 1px solid #e0e0e0; border-radius: 4px; padding: 16px; margin-bottom: 12px; }
+  section h2 { font-size: 11px; font-weight: 600; text-transform: uppercase; color: #999; letter-spacing: 0.8px; margin-bottom: 12px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+
+  .metric { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; border-bottom: 1px solid #f0f0f0; }
+  .metric:last-child { border-bottom: none; }
+  .metric-label { color: #757575; font-size: 13px; }
+  .metric-value { font-size: 18px; font-weight: 600; }
+  .metric-unit { color: #999; font-size: 12px; margin-left: 2px; }
+
+  .unit-card { border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px; background: #fafafa; border-left: 3px solid #1565c0; }
+  .unit-card .uid { font-size: 11px; color: #999; text-transform: uppercase; margin-bottom: 4px; }
+  .unit-card .uval { font-size: 20px; font-weight: 600; }
+
+  .health-card { border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px; background: #fafafa; }
+  .health-card .hname { font-size: 11px; font-weight: 600; text-transform: uppercase; color: #999; margin-bottom: 8px; }
+  .health-card .hscore { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+  .health-card .hwarn { font-size: 11px; color: #c62828; margin-top: 4px; }
+
+  .score-bar { height: 4px; border-radius: 2px; background: #e0e0e0; margin: 6px 0; overflow: hidden; }
+  .score-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
+
+  .diag-item { padding: 8px 12px; border-left: 3px solid; margin-bottom: 6px; background: #fafafa; font-size: 13px; }
+  .diag-item.critical { border-left-color: #c62828; }
+  .diag-item.warning { border-left-color: #f57f17; }
+  .diag-item.info { border-left-color: #1565c0; }
+  .diag-item .dtag { font-weight: 600; }
+  .diag-item .dsev { font-size: 10px; text-transform: uppercase; color: #999; }
+  .diag-item .devid { font-size: 11px; color: #757575; margin-top: 2px; }
+
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #e0e0e0; }
+  .tl-event { position: relative; padding: 8px 0 8px 16px; border-bottom: 1px solid #f0f0f0; }
+  .tl-event::before { content: ''; position: absolute; left: -20px; top: 14px; width: 8px; height: 8px; border-radius: 50%; background: #1565c0; }
+  .tl-event.critical::before { background: #c62828; }
+  .tl-event.warning::before { background: #f57f17; }
+  .tl-time { font-size: 11px; color: #999; }
+  .tl-desc { font-size: 13px; font-weight: 500; }
+
+  .canvas-wrap { position: relative; height: 160px; }
+  canvas { width: 100% !important; height: 100% !important; }
+
+  .controls-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .ctrl-group { display: flex; align-items: center; gap: 6px; }
+  .ctrl-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.5px; min-width: 40px; }
+  .btn { padding: 6px 14px; border: 1px solid #ccc; border-radius: 3px; font-family: inherit; font-size: 12px; font-weight: 500; cursor: pointer; background: #fff; color: #333; }
+  .btn:hover { background: #f5f5f5; }
+  .btn-arm { border-color: #c62828; color: #c62828; }
+  .btn-disarm { border-color: #757575; color: #757575; }
+  .btn-prop { border-color: #2e7d32; color: #2e7d32; }
+  .btn-prop.off { border-color: #f57f17; color: #f57f17; }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+
+  input[type=range] { -webkit-appearance: none; appearance: none; height: 4px; background: #e0e0e0; border-radius: 2px; outline: none; width: 120px; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #1565c0; cursor: pointer; border: none; }
+  .slider-val { font-size: 13px; min-width: 32px; text-align: right; color: #1565c0; font-weight: 500; }
+
+  .no-data { color: #999; font-size: 13px; padding: 16px 0; text-align: center; }
+
+  .profile-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
+  .vehicle-badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; background: #e3f2fd; color: #1565c0; margin-left: 8px; }
+
+  @media (max-width: 768px) {
+    .grid-2, .profile-grid { grid-template-columns: 1fr; }
+    header h1 { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>UAV DOCTOR</h1>
+  <span id="status-badge" class="badge OK">LOADING</span>
+  <span id="armed-badge" class="badge disarmed">DISARMED</span>
+  <span id="vehicle-type" class="vehicle-badge"></span>
+  <span id="last-update"></span>
+</header>
+
+<div class="tabs">
+  <div class="tab active" data-tab="monitor" onclick="switchTab('monitor')">MONITOR</div>
+  <div class="tab" data-tab="health" onclick="switchTab('health')">HEALTH</div>
+</div>
+
+<div class="container">
+
+<div id="tab-monitor" class="tab-content active">
+
+  <section>
+    <h2>Controls</h2>
+    <div class="controls-row">
+      <div class="ctrl-group">
+        <button class="btn btn-arm" id="btn-arm" onclick="sendCmd('arm')">ARM</button>
+        <button class="btn btn-disarm" id="btn-disarm" onclick="sendCmd('disarm')">DISARM</button>
+      </div>
+      <div class="ctrl-group">
+        <span class="ctrl-label">Throttle</span>
+        <input type="range" id="thr-slider" min="0" max="100" value="0" oninput="sendThrottle(this.value)">
+        <span class="slider-val" id="thr-slider-val">0%</span>
+      </div>
+      <div class="ctrl-group">
+        <button class="btn btn-prop" id="btn-prop" onclick="toggleProp()">PROP ON</button>
+      </div>
+      <div class="ctrl-group">
+        <span class="ctrl-label">Drag</span>
+        <input type="range" id="fri-slider" min="0" max="100" value="0" oninput="sendFriction(this.value)">
+        <span class="slider-val" id="fri-slider-val">0%</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="grid-2">
+    <section>
+      <h2>Battery</h2>
+      <div class="metric"><span class="metric-label">Voltage</span><span><span class="metric-value" id="bv"></span><span class="metric-unit">V</span></span></div>
+      <div class="metric"><span class="metric-label">Current</span><span><span class="metric-value" id="bi"></span><span class="metric-unit">A</span></span></div>
+      <div class="metric"><span class="metric-label">Power</span><span><span class="metric-value" id="bp"></span><span class="metric-unit">W</span></span></div>
+      <div class="metric"><span class="metric-label">SoC</span><span><span class="metric-value" id="soc"></span><span class="metric-unit">%</span></span></div>
+      <div class="metric"><span class="metric-label">Health</span><span><span class="metric-value" id="batt-h"></span><span class="metric-unit">%</span></span></div>
+    </section>
+
+    <section>
+      <h2>Throttle</h2>
+      <div class="metric"><span class="metric-label" id="thr-label">Setpoint</span><span><span class="metric-value" id="thr-val"></span><span class="metric-unit">%</span></span></div>
+      <div class="score-bar"><div class="score-fill" id="thr-bar" style="width:0%;background:#1565c0"></div></div>
+      <div style="margin-top:12px">
+        <h2>Vibration</h2>
+        <div class="grid-auto" id="vib-grid"></div>
+      </div>
+    </section>
+  </div>
+
+  <section>
+    <h2>Propulsion Units</h2>
+    <div id="units-grid"></div>
+  </section>
+
+  <section id="balance-section" style="display:none">
+    <h2>Motor Balance</h2>
+    <div class="canvas-wrap"><canvas id="chart-balance"></canvas></div>
+  </section>
+
+  <section id="efficiency-section" style="display:none">
+    <h2>Efficiency Trend</h2>
+    <div class="canvas-wrap"><canvas id="chart-efficiency"></canvas></div>
+  </section>
+
+  <div class="grid-2">
+    <section>
+      <h2>Voltage</h2>
+      <div class="canvas-wrap"><canvas id="chart-v"></canvas></div>
+    </section>
+    <section>
+      <h2>Unit Currents</h2>
+      <div class="canvas-wrap"><canvas id="chart-i"></canvas></div>
+    </section>
+  </div>
+
+  <section>
+    <h2>Active Diagnoses</h2>
+    <div id="diag-list"><p class="no-data">No active diagnoses</p></div>
+  </section>
+</div>
+
+<div id="tab-health" class="tab-content">
+
+  <div class="profile-grid">
+    <section>
+      <h2>System Profile</h2>
+      <div class="metric"><span class="metric-label">Vehicle Type</span><span class="metric-value" id="prof-type">--</span></div>
+      <div class="metric"><span class="metric-label">Propulsion Units</span><span class="metric-value" id="prof-num">--</span></div>
+      <div class="metric"><span class="metric-label">Battery</span><span class="metric-value" id="prof-batt">--</span></div>
+      <div class="metric"><span class="metric-label">Features</span><span class="metric-value" id="prof-features">--</span></div>
+      <div class="metric"><span class="metric-label">Status</span><span class="metric-value" id="sys-status">OK</span></div>
+    </section>
+
+    <section>
+      <h2>Overall Health</h2>
+      <div style="font-size:48px;font-weight:700;text-align:center;padding:16px 0" id="overall-score">--</div>
+      <div class="score-bar"><div class="score-fill" id="overall-bar" style="width:0%"></div></div>
+    </section>
+  </div>
+
+  <section>
+    <h2>Battery Health</h2>
+    <div id="batt-health-card" class="health-card">
+      <div class="hname">Battery</div>
+      <div class="hscore" id="batt-score">--</div>
+      <div class="score-bar"><div class="score-fill" id="batt-bar" style="width:0%"></div></div>
+      <div class="hwarn" id="batt-warn"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Propulsion Unit Health</h2>
+    <div id="prop-health-grid"></div>
+  </section>
+
+  <section>
+    <h2>Active Diagnoses</h2>
+    <div id="health-diag-list"><p class="no-data">No active diagnoses</p></div>
+  </section>
+
+  <section>
+    <h2>Failure Prediction</h2>
+    <div id="prediction-box"><p class="no-data">No prediction available</p></div>
+  </section>
+
+  <section>
+    <h2>Fault Timeline</h2>
+    <div class="timeline" id="timeline"><p class="no-data">No events recorded</p></div>
+  </section>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+const POLL_MS = 500;
+let voltChart, curChart, balanceChart, effChart;
+let _vehicleType = 'quad';
+let _nUnits = 4;
+const COLORS = ['#c62828','#2e7d32','#1565c0','#f57f17','#8e24aa','#00acc1','#e91e63','#ff6f00'];
+
+function healthColor(s) { return s >= 80 ? '#2e7d32' : s >= 50 ? '#f57f17' : '#c62828'; }
+
+function gridClass(n) {
+  if (n <= 2) return 'grid-2';
+  return 'grid-auto';
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.toggle('active', t.id === 'tab-' + name));
+  if (name === 'health') setTimeout(() => { if (voltChart) voltChart.resize(); if (curChart) curChart.resize(); }, 50);
+}
+
+async function sendCmd(cmd) {
+  try { await fetch('/api/' + cmd, { method: 'POST' }); } catch(e) { console.warn(cmd, e); }
+}
+
+let _throttleSending = false;
+async function sendThrottle(val) {
+  document.getElementById('thr-slider-val').textContent = val + '%';
+  if (_throttleSending) return;
+  _throttleSending = true;
+  try { await fetch('/api/throttle', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({throttle: val / 100}) }); } catch(e) { console.warn(e); }
+  _throttleSending = false;
+}
+
+let _propState = true;
+async function toggleProp() {
+  _propState = !_propState;
+  const btn = document.getElementById('btn-prop');
+  btn.textContent = _propState ? 'PROP ON' : 'PROP OFF';
+  btn.className = 'btn btn-prop' + (_propState ? '' : ' off');
+  try { await fetch('/api/prop', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({on: _propState}) }); } catch(e) { console.warn(e); }
+}
+
+async function sendFriction(val) {
+  document.getElementById('fri-slider-val').textContent = val + '%';
+  try { await fetch('/api/friction', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({level: val / 100}) }); } catch(e) { console.warn(e); }
+}
+
+function initCharts() {
+  voltChart = new Chart(document.getElementById('chart-v').getContext('2d'), {
+    type: 'line',
+    data: { labels: [], datasets: [{ label: 'V', data: [], borderColor: '#1565c0', borderWidth: 1.5, pointRadius: 0, tension: 0.3, fill: false }] },
+    options: { animation: false, responsive: true, maintainAspectRatio: false,
+      scales: { x: { display: false }, y: { ticks: { color: '#999' }, grid: { color: '#f0f0f0' } } },
+      plugins: { legend: { display: false } } }
+  });
+  curChart = new Chart(document.getElementById('chart-i').getContext('2d'), {
+    type: 'line',
+    data: { labels: [], datasets: [] },
+    options: { animation: false, responsive: true, maintainAspectRatio: false,
+      scales: { x: { display: false }, y: { ticks: { color: '#999' }, grid: { color: '#f0f0f0' }, title: { display: true, text: 'Current (A)', color: '#999' } } },
+      plugins: { legend: { labels: { color: '#666', font: { size: 10 } } } } }
+  });
+  balanceChart = new Chart(document.getElementById('chart-balance').getContext('2d'), {
+    type: 'bar',
+    data: { labels: [], datasets: [{ label: 'Motor Current (A)', data: [], backgroundColor: COLORS.slice() }] },
+    options: { animation: false, responsive: true, maintainAspectRatio: false,
+      scales: { y: { beginAtZero: true, ticks: { color: '#999' }, grid: { color: '#f0f0f0' } },
+               x: { ticks: { color: '#999' } } },
+      plugins: { legend: { display: false } } }
+  });
+  effChart = new Chart(document.getElementById('chart-efficiency').getContext('2d'), {
+    type: 'line',
+    data: { labels: [], datasets: [{ label: 'Efficiency (km/kWh)', data: [], borderColor: '#2e7d32', borderWidth: 1.5, pointRadius: 0, tension: 0.3, fill: false }] },
+    options: { animation: false, responsive: true, maintainAspectRatio: false,
+      scales: { x: { display: false }, y: { ticks: { color: '#999' }, grid: { color: '#f0f0f0' } } },
+      plugins: { legend: { display: false } } }
+  });
+}
+
+async function poll() {
+  try {
+    const r = await fetch('/api/latest');
+    const d = await r.json();
+    if (!d.battery) return;
+
+    _vehicleType = d.vehicle_type || 'quad';
+    _nUnits = d.n_units || (d.propulsion_units ? d.propulsion_units.length : 4);
+    document.getElementById('vehicle-type').textContent = _vehicleType.toUpperCase();
+
+    const b = d.battery;
+    document.getElementById('bv').textContent = b.voltage.toFixed(2);
+    document.getElementById('bi').textContent = b.current.toFixed(1);
+    document.getElementById('bp').textContent = b.power.toFixed(1);
+    document.getElementById('soc').textContent = b.soc.toFixed(1);
+    document.getElementById('batt-h').textContent = (b.health != null ? b.health.toFixed(0) : '--');
+    document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+
+    const sb = document.getElementById('status-badge');
+    sb.textContent = d.status; sb.className = 'badge ' + d.status;
+
+    const ab = document.getElementById('armed-badge');
+    ab.textContent = d.armed ? 'ARMED' : 'DISARMED';
+    ab.className = 'badge ' + (d.armed ? 'armed' : 'disarmed');
+
+    const thr = d.throttle ?? 0;
+    document.getElementById('thr-bar').style.width = thr + '%';
+    document.getElementById('thr-val').textContent = thr.toFixed(0) + '%';
+    document.getElementById('thr-label').textContent = 'Setpoint';
+    document.getElementById('thr-slider').value = thr;
+    document.getElementById('thr-slider-val').textContent = thr.toFixed(0) + '%';
+    _propState = d.prop_on !== false;
+    const pbtn = document.getElementById('btn-prop');
+    pbtn.textContent = _propState ? 'PROP ON' : 'PROP OFF';
+    pbtn.className = 'btn btn-prop' + (_propState ? '' : ' off');
+    const fri = (d.friction_level || 0) * 100;
+    document.getElementById('fri-slider').value = fri;
+    document.getElementById('fri-slider-val').textContent = fri.toFixed(0) + '%';
+
+    const units = d.propulsion_units || [];
+    const unitsGrid = document.getElementById('units-grid');
+
+    if (units.length > 0) {
+      const cols = Math.min(units.length, 4);
+      unitsGrid.className = 'grid-auto';
+      unitsGrid.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
+      unitsGrid.innerHTML = units.map((u,i) =>
+        '<div class="unit-card" style="border-left-color:' + COLORS[i % COLORS.length] + '">' +
+          '<div class="uid">' + (u.name || 'UNIT ' + u.id) + '</div>' +
+          '<div class="uval">' + (u.current !== null ? u.current.toFixed(2) : 'N/A') + '<span style="font-size:12px;color:#999;font-weight:400"> A</span></div>' +
+          '<div style="font-size:11px;color:#757575;margin-top:4px">' + (u.esc_temp != null ? u.esc_temp.toFixed(1) + '°C' : '') + '</div>' +
+        '</div>'
+      ).join('');
+    } else {
+      unitsGrid.innerHTML = '<p class="no-data">No propulsion units</p>';
+    }
+
+    const vib = d.vibration || [];
+    document.getElementById('vib-grid').innerHTML = vib.map((v,i) =>
+      '<div style="border:1px solid #e0e0e0;border-radius:3px;padding:8px;text-align:center">' +
+        '<div style="font-size:11px;color:#999">' + (units[i] ? (units[i].name || 'U'+(i+1)) : 'U'+(i+1)) + '</div>' +
+        '<div style="font-size:16px;font-weight:600">' + (v.rms || 0).toFixed(3) + '</div>' +
+        '<div style="font-size:10px;color:#999">g RMS</div>' +
+      '</div>'
+    ).join('');
+
+    diagHtml(d);
+    chartUpdate(d);
+
+    const oh = d.overall_health;
+    if (oh != null) {
+      document.getElementById('overall-score').textContent = oh.toFixed(0) + '%';
+      document.getElementById('overall-score').style.color = healthColor(oh);
+      document.getElementById('overall-bar').style.width = oh + '%';
+      document.getElementById('overall-bar').style.background = healthColor(oh);
+    }
+    document.getElementById('sys-status').textContent = d.status;
+    document.getElementById('sys-status').style.color = d.status === 'OK' ? '#2e7d32' : d.status === 'WARNING' ? '#f57f17' : '#c62828';
+
+    if (b.health != null) {
+      document.getElementById('batt-score').textContent = b.health.toFixed(0) + '%';
+      document.getElementById('batt-score').style.color = healthColor(b.health);
+      document.getElementById('batt-bar').style.width = b.health + '%';
+      document.getElementById('batt-bar').style.background = healthColor(b.health);
+    }
+
+    // Show/hide conditional sections based on vehicle type
+    const balSection = document.getElementById('balance-section');
+    const effSection = document.getElementById('efficiency-section');
+    if (_vehicleType === 'quad' && _nUnits > 1) {
+      balSection.style.display = 'block';
+      effSection.style.display = 'none';
+      updateBalanceChart(units);
+    } else {
+      balSection.style.display = 'none';
+      effSection.style.display = 'block';
+      updateEfficiencyChart(d);
+    }
+
+    healthDiagHtml(d);
+
+    const pred = d.predicted_failure;
+    document.getElementById('prediction-box').innerHTML = pred
+      ? '<div class="diag-item ' + (pred.severity || 'info') + '">' +
+          '<div class="dtag">' + pred.component + ' / ' + pred.fault_type + '</div>' +
+          '<div class="dsev">' + (pred.severity || '') + ' &middot; confidence: ' + (pred.confidence * 100).toFixed(0) + '%</div>' +
+          (pred.evidence ? '<div class="devid">' + JSON.stringify(pred.evidence).slice(0,120) + '</div>' : '') +
+        '</div>'
+      : '<p class="no-data">No prediction available</p>';
+
+    try {
+      const fe = await (await fetch('/api/fault_events')).json();
+      document.getElementById('timeline').innerHTML = fe.length
+        ? fe.slice().reverse().map(e =>
+            '<div class="tl-event ' + (e.severity || 'info') + '">' +
+              '<div class="tl-time">' + new Date(e.ts * 1000).toLocaleTimeString() + '</div>' +
+              '<div class="tl-desc">' + e.component + ' / ' + e.fault_type + ' (' + (e.confidence * 100).toFixed(0) + '%)</div>' +
+            '</div>'
+          ).join('')
+        : '<p class="no-data">No events recorded</p>';
+    } catch(e) {}
+
+    // Update health tab from /api/health
+    try {
+      const hr = await fetch('/api/health');
+      const hd = await hr.json();
+      const hUnits = hd.propulsion_units || [];
+
+      document.getElementById('prof-type').textContent = (hd.vehicle_type || 'quad').toUpperCase();
+      document.getElementById('prof-num').textContent = hd.n_units || hUnits.length;
+      document.getElementById('prof-batt').textContent = '3S LiPo 3300mAh';
+
+      const featEl = document.getElementById('prof-features');
+      if (_vehicleType === 'quad') {
+        featEl.textContent = 'Motor balance';
+      } else {
+        featEl.textContent = 'Efficiency tracking';
+      }
+
+      if (hUnits.length > 0) {
+        const cols = Math.min(hUnits.length, 4);
+        const phg = document.getElementById('prop-health-grid');
+        phg.className = 'grid-auto';
+        phg.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
+        phg.innerHTML = hUnits.map(u =>
+          '<div class="health-card" style="text-align:center">' +
+            '<div class="hname">' + (u.name || 'PROP ' + u.id) + '</div>' +
+            '<div class="hscore" style="color:' + healthColor(u.score) + '">' + (u.score != null ? u.score.toFixed(0) : '--') + '%</div>' +
+            '<div class="score-bar"><div class="score-fill" style="width:' + (u.score || 0) + '%;background:' + healthColor(u.score || 0) + '"></div></div>' +
+            (u.warnings && u.warnings.length ? '<div class="hwarn">' + u.warnings.join('; ') + '</div>' : '') +
+          '</div>'
+        ).join('');
+      }
+    } catch(e) { console.warn('Health poll error:', e); }
+
+  } catch(e) { console.warn('Poll error:', e); }
+}
+
+function updateBalanceChart(units) {
+  balanceChart.data.labels = units.map((u,i) => u.name || 'U' + (i+1));
+  balanceChart.data.datasets[0].data = units.map(u => u.current || 0);
+  balanceChart.data.datasets[0].backgroundColor = units.map((_,i) => COLORS[i % COLORS.length]);
+  balanceChart.update('none');
+}
+
+function updateEfficiencyChart(d) {
+  // Simple efficiency estimate: speed proxy / power
+  const p = d.battery ? d.battery.power || 0.1 : 0.1;
+  const thr = d.throttle || 0;
+  const eff = thr > 5 ? (thr * 0.3 / p) * 100 : 0; // proxy km/kWh
+  effChart.data.labels.push(new Date(d.ts * 1000).toLocaleTimeString());
+  effChart.data.datasets[0].data.push(eff);
+  if (effChart.data.labels.length > 200) { effChart.data.labels.shift(); effChart.data.datasets[0].data.shift(); }
+  effChart.update('none');
+}
+
+function diagHtml(d) {
+  const diag = d.active_diagnoses || [];
+  document.getElementById('diag-list').innerHTML = diag.length
+    ? diag.map(f =>
+        '<div class="diag-item ' + (f.severity || 'info') + '">' +
+          '<div class="dtag">' + f.component + ' / ' + f.fault_type + '</div>' +
+          '<div class="dsev">' + (f.severity || '') + ' &middot; conf: ' + (f.confidence * 100).toFixed(0) + '%</div>' +
+          (f.evidence ? '<div class="devid">' + JSON.stringify(f.evidence).slice(0,120) + '</div>' : '') +
+        '</div>'
+      ).join('')
+    : '<p class="no-data">No active diagnoses</p>';
+}
+
+function healthDiagHtml(d) {
+  const diag = d.active_diagnoses || [];
+  document.getElementById('health-diag-list').innerHTML = diag.length
+    ? diag.map(f =>
+        '<div class="diag-item ' + (f.severity || 'info') + '">' +
+          '<div class="dtag">' + f.component + ' / ' + f.fault_type + '</div>' +
+          '<div class="dsev">' + (f.severity || '') + ' &middot; conf: ' + (f.confidence * 100).toFixed(0) + '%</div>' +
+          (f.evidence ? '<div class="devid">' + JSON.stringify(f.evidence).slice(0,120) + '</div>' : '') +
+        '</div>'
+      ).join('')
+    : '<p class="no-data">No active diagnoses</p>';
+}
+
+function chartUpdate(d) {
+  const b = d.battery;
+  voltChart.data.labels.push(new Date(d.ts * 1000).toLocaleTimeString());
+  voltChart.data.datasets[0].data.push(b.voltage);
+  if (voltChart.data.labels.length > 200) { voltChart.data.labels.shift(); voltChart.data.datasets[0].data.shift(); }
+  voltChart.update('none');
+
+  const units = d.propulsion_units || [];
+  const uc = units.length;
+  if (curChart.data.datasets.length === 0) {
+    for (let i = 0; i < uc; i++)
+      curChart.data.datasets.push({ label: units[i].name || 'U' + (i+1), data: [], borderColor: COLORS[i % COLORS.length], borderWidth: 1.5, pointRadius: 0, tension: 0.3, fill: false });
+  }
+  curChart.data.labels.push(new Date(d.ts * 1000).toLocaleTimeString());
+  for (let i = 0; i < uc; i++)
+    curChart.data.datasets[i].data.push(units[i].current != null ? units[i].current : 0);
+  if (curChart.data.labels.length > 200) { curChart.data.labels.shift(); for (let ds of curChart.data.datasets) ds.data.shift(); }
+  curChart.update('none');
+}
+
+initCharts();
+poll();
+setInterval(poll, POLL_MS);
+</script>
+</body>
+</html>

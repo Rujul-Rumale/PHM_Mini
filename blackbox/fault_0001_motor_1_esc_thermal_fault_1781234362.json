@@ -1,0 +1,63 @@
+{
+  "timestamp": 1781234362.230856,
+  "component": "motor_1",
+  "fault_type": "esc_thermal_fault",
+  "confidence": 0.8,
+  "severity": "warning",
+  "evidence": {
+    "temp_rise_z": 13.999999999999998,
+    "expected": 0.0
+  },
+  "before_snapshot": [
+    {
+      "timestamp": 1781234362.022675,
+      "voltage": 12.5655,
+      "current": 2.3,
+      "motor_currents": [
+        0.45,
+        0.45,
+        0.45,
+        0.45
+      ],
+      "motor_vibrations": [
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ],
+      "motor_temps": [
+        26.4,
+        26.4,
+        26.4,
+        26.4
+      ],
+      "throttle": 0.0,
+      "temperature": 26.4
+    },
+    {
+      "timestamp": 1781234362.122211,
+      "voltage": 12.531,
+      "current": 2.3,
+      "motor_currents": [
+        0.45,
+        0.45,
+        0.45,
+        0.45
+      ],
+      "motor_vibrations": [
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ],
+      "motor_temps": [
+        26.4,
+        26.4,
+        26.4,
+        26.4
+      ],
+      "throttle": 0.0,
+      "temperature": 26.4
+    }
+  ]
+}

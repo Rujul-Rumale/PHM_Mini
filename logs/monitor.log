@@ -1,0 +1,112 @@
+2026-06-12 08:57:54,423 [INFO] core.baseline_manager: Baseline loaded for 0 propulsion units
+2026-06-12 08:57:54,426 [INFO] monitor: Simulation mode — 4 propulsion units  faults=none
+2026-06-12 08:58:11,672 [INFO] core.baseline_manager: Baseline loaded for 0 propulsion units
+2026-06-12 08:58:11,673 [INFO] monitor: Simulation mode — 4 propulsion units  faults=none
+2026-06-12 08:58:11,674 [INFO] sensors.ina226: [SIM] MockINA226 'battery' ready
+2026-06-12 08:58:11,674 [INFO] sensors.ina226: [SIM] MockINA226 'front_left' ready
+2026-06-12 08:58:11,674 [INFO] sensors.ina226: [SIM] MockINA226 'front_right' ready
+2026-06-12 08:58:11,674 [INFO] sensors.ina226: [SIM] MockINA226 'rear_left' ready
+2026-06-12 08:58:11,674 [INFO] sensors.ina226: [SIM] MockINA226 'rear_right' ready
+2026-06-12 08:58:11,678 [ERROR] monitor: smbus2 not installed: pip3 install smbus2
+2026-06-12 08:59:09,641 [INFO] core.baseline_manager: Baseline loaded for 0 propulsion units
+2026-06-12 08:59:09,644 [INFO] monitor: Simulation mode — 4 propulsion units  faults=none
+2026-06-12 08:59:09,645 [INFO] sensors.ina226: [SIM] MockINA226 'battery' ready
+2026-06-12 08:59:09,645 [INFO] sensors.ina226: [SIM] MockINA226 'front_left' ready
+2026-06-12 08:59:09,645 [INFO] sensors.ina226: [SIM] MockINA226 'front_right' ready
+2026-06-12 08:59:09,645 [INFO] sensors.ina226: [SIM] MockINA226 'rear_left' ready
+2026-06-12 08:59:09,646 [INFO] sensors.ina226: [SIM] MockINA226 'rear_right' ready
+2026-06-12 08:59:09,873 [INFO] monitor: Dashboard available at http://0.0.0.0:5055
+2026-06-12 08:59:09,874 [INFO] monitor: Monitor started — quad (4 propulsion units)
+2026-06-12 08:59:09,890 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5055
+ * Running on http://192.168.1.33:5055
+2026-06-12 08:59:09,890 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-06-12 08:59:09,898 [INFO] monitor: STATUS=OK | V=12.56V I=2.5A SoC=99% | front_left=0.5A(100%)  front_right=0.5A(100%)  rear_left=0.5A(100%)  rear_right=0.5A(100%) | HEALTH=100%  BATT=100%
+2026-06-12 08:59:14,910 [INFO] monitor: STATUS=OK | V=12.52V I=2.5A SoC=99% | front_left=0.5A(100%)  front_right=0.5A(100%)  rear_left=0.5A(100%)  rear_right=0.5A(100%) | HEALTH=100%  BATT=100%
+2026-06-12 09:00:07,548 [INFO] core.baseline_manager: Baseline loaded for 0 propulsion units
+2026-06-12 09:00:07,553 [INFO] monitor: Simulation mode — 4 propulsion units  faults=none
+2026-06-12 09:00:07,553 [INFO] sensors.ina226: [SIM] MockINA226 'battery' ready
+2026-06-12 09:00:07,553 [INFO] sensors.ina226: [SIM] MockINA226 'front_left' ready
+2026-06-12 09:00:07,553 [INFO] sensors.ina226: [SIM] MockINA226 'front_right' ready
+2026-06-12 09:00:07,553 [INFO] sensors.ina226: [SIM] MockINA226 'rear_left' ready
+2026-06-12 09:00:07,553 [INFO] sensors.ina226: [SIM] MockINA226 'rear_right' ready
+2026-06-12 09:00:07,883 [INFO] monitor: Dashboard available at http://0.0.0.0:5058
+2026-06-12 09:00:07,884 [INFO] monitor: Monitor started — quad (4 propulsion units)
+2026-06-12 09:00:07,896 [INFO] monitor: STATUS=OK | V=12.56V I=2.5A SoC=99% | front_left=0.5A(100%)  front_right=0.5A(100%)  rear_left=0.5A(100%)  rear_right=0.5A(100%) | HEALTH=100%  BATT=100%
+2026-06-12 09:00:07,898 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5058
+ * Running on http://192.168.1.33:5058
+2026-06-12 09:00:07,898 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-06-12 09:00:09,522 [INFO] werkzeug: 127.0.0.1 - - [12/Jun/2026 09:00:09] "GET /api/latest HTTP/1.1" 200 -
+2026-06-12 09:00:12,946 [INFO] monitor: STATUS=OK | V=12.52V I=2.5A SoC=99% | front_left=0.5A(100%)  front_right=0.5A(100%)  rear_left=0.5A(100%)  rear_right=0.5A(100%) | HEALTH=100%  BATT=100%
+2026-06-12 09:00:27,936 [INFO] core.baseline_manager: Baseline loaded for 0 propulsion units
+2026-06-12 09:00:27,940 [INFO] monitor: Simulation mode — 4 propulsion units  faults=none
+2026-06-12 09:00:27,940 [INFO] sensors.ina226: [SIM] MockINA226 'battery' ready
+2026-06-12 09:00:27,940 [INFO] sensors.ina226: [SIM] MockINA226 'front_left' ready
+2026-06-12 09:00:27,941 [INFO] sensors.ina226: [SIM] MockINA226 'front_right' ready
+2026-06-12 09:00:27,941 [INFO] sensors.ina226: [SIM] MockINA226 'rear_left' ready
+2026-06-12 09:00:27,941 [INFO] sensors.ina226: [SIM] MockINA226 'rear_right' ready
+2026-06-12 09:00:28,194 [INFO] monitor: Dashboard available at http://0.0.0.0:5059
+2026-06-12 09:00:28,194 [INFO] monitor: Monitor started — quad (4 propulsion units)
+2026-06-12 09:00:28,204 [INFO] monitor: STATUS=OK | V=12.56V I=2.5A SoC=99% | front_left=0.5A(100%)  front_right=0.5A(100%)  rear_left=0.5A(100%)  rear_right=0.5A(100%) | HEALTH=100%  BATT=100%
+2026-06-12 09:00:28,214 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5059
+ * Running on http://192.168.1.33:5059
+2026-06-12 09:00:28,214 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-06-12 09:00:30,209 [INFO] werkzeug: 127.0.0.1 - - [12/Jun/2026 09:00:30] "GET /api/latest HTTP/1.1" 200 -
+2026-06-12 09:00:30,820 [INFO] werkzeug: 127.0.0.1 - - [12/Jun/2026 09:00:30] "GET /api/health HTTP/1.1" 200 -
+2026-06-12 09:00:33,214 [INFO] monitor: STATUS=OK | V=12.52V I=2.5A SoC=99% | front_left=0.5A(100%)  front_right=0.5A(100%)  rear_left=0.5A(100%)  rear_right=0.5A(100%) | HEALTH=100%  BATT=100%
+2026-06-12 09:00:51,833 [INFO] core.baseline_manager: Baseline loaded for 0 propulsion units
+2026-06-12 09:00:51,837 [INFO] monitor: Simulation mode — 4 propulsion units  faults=['prop-damage', 'bearing-wear', 'esc-degrade', 'battery-old']
+2026-06-12 09:00:51,838 [INFO] sensors.ina226: [SIM] MockINA226 'battery' ready
+2026-06-12 09:00:51,838 [INFO] sensors.ina226: [SIM] MockINA226 'front_left' ready
+2026-06-12 09:00:51,838 [INFO] sensors.ina226: [SIM] MockINA226 'front_right' ready
+2026-06-12 09:00:51,838 [INFO] sensors.ina226: [SIM] MockINA226 'rear_left' ready
+2026-06-12 09:00:51,838 [INFO] sensors.ina226: [SIM] MockINA226 'rear_right' ready
+2026-06-12 09:00:51,838 [INFO] monitor: Fault injection: BATTERY_OLD (R_int=0.060)
+2026-06-12 09:00:51,838 [INFO] monitor: Fault injection: PROP_DAMAGE on unit 1
+2026-06-12 09:00:51,838 [INFO] monitor: Fault injection: BEARING_WEAR on unit 1
+2026-06-12 09:00:51,838 [INFO] monitor: Fault injection: ESC_DEGRADE on unit 1
+2026-06-12 09:00:52,124 [INFO] monitor: Dashboard available at http://0.0.0.0:5060
+2026-06-12 09:00:52,124 [INFO] monitor: Monitor started — quad (4 propulsion units)
+2026-06-12 09:00:52,138 [INFO] monitor: STATUS=OK | V=12.45V I=2.5A SoC=95% | front_left=0.5A(100%)  front_right=0.5A(100%)  rear_left=0.5A(100%)  rear_right=0.5A(100%) | HEALTH=100%  BATT=100%
+2026-06-12 09:00:52,141 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5060
+ * Running on http://192.168.1.33:5060
+2026-06-12 09:00:52,141 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-06-12 09:00:55,720 [INFO] werkzeug: 127.0.0.1 - - [12/Jun/2026 09:00:55] "GET /api/latest HTTP/1.1" 200 -
+2026-06-12 09:00:57,142 [INFO] monitor: STATUS=OK | V=12.30V I=2.5A SoC=95% | front_left=0.5A(100%)  front_right=0.5A(100%)  rear_left=0.5A(100%)  rear_right=0.5A(100%) | HEALTH=100%  BATT=100%
+2026-06-12 09:01:02,184 [INFO] monitor: STATUS=OK | V=12.29V I=2.5A SoC=95% | front_left=0.5A(100%)  front_right=0.5A(100%)  rear_left=0.5A(100%)  rear_right=0.5A(100%) | HEALTH=100%  BATT=100%
+2026-06-12 09:01:57,204 [INFO] core.baseline_manager: Baseline loaded for 0 propulsion units
+2026-06-12 09:01:57,210 [INFO] monitor: Simulation mode — 1 propulsion units  faults=none
+2026-06-12 09:01:57,211 [INFO] sensors.ina226: [SIM] MockINA226 'battery' ready
+2026-06-12 09:01:57,211 [INFO] sensors.ina226: [SIM] MockINA226 'pusher' ready
+2026-06-12 09:01:57,470 [INFO] monitor: Dashboard available at http://0.0.0.0:5061
+2026-06-12 09:01:57,470 [INFO] monitor: Monitor started — fixed-wing (1 propulsion units)
+2026-06-12 09:01:57,482 [INFO] monitor: STATUS=OK | V=12.59V I=1.0A SoC=100% | pusher=0.5A(100%) | HEALTH=100%  BATT=100%
+2026-06-12 09:01:57,491 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5061
+ * Running on http://192.168.1.33:5061
+2026-06-12 09:01:57,491 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-06-12 09:01:59,152 [INFO] werkzeug: 127.0.0.1 - - [12/Jun/2026 09:01:59] "GET /api/latest HTTP/1.1" 200 -
+2026-06-12 09:02:02,528 [INFO] monitor: STATUS=OK | V=12.57V I=1.0A SoC=99% | pusher=0.5A(100%) | HEALTH=100%  BATT=100%
+2026-06-12 09:02:07,529 [INFO] monitor: STATUS=OK | V=12.57V I=1.0A SoC=99% | pusher=0.5A(100%) | HEALTH=100%  BATT=100%
+2026-06-12 09:02:48,334 [INFO] core.baseline_manager: Baseline loaded for 0 propulsion units
+2026-06-12 09:02:48,337 [INFO] monitor: Simulation mode — 1 propulsion units  faults=none
+2026-06-12 09:02:48,338 [INFO] sensors.ina226: [SIM] MockINA226 'battery' ready
+2026-06-12 09:02:48,338 [INFO] sensors.ina226: [SIM] MockINA226 'pusher' ready
+2026-06-12 09:02:48,576 [INFO] monitor: Dashboard available at http://0.0.0.0:5062
+2026-06-12 09:02:48,580 [INFO] monitor: Monitor started — fixed-wing (1 propulsion units)
+2026-06-12 09:02:48,603 [INFO] monitor: STATUS=OK | V=12.58V I=1.3A SoC=99% | pusher=0.8A(100%) | HEALTH=100%  BATT=100%
+2026-06-12 09:02:48,610 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5062
+ * Running on http://192.168.1.33:5062
+2026-06-12 09:02:48,611 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-06-12 09:02:50,353 [INFO] werkzeug: 127.0.0.1 - - [12/Jun/2026 09:02:50] "GET /api/latest HTTP/1.1" 200 -
+2026-06-12 09:02:53,629 [INFO] monitor: STATUS=OK | V=12.56V I=1.3A SoC=99% | pusher=0.8A(100%) | HEALTH=100%  BATT=100%
