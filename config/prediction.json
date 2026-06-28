@@ -1,0 +1,12 @@
+{
+  "degradation_thresholds": {
+    "battery_r_internal_growth_pct": 30.0,
+    "propulsion_vibration_deviation_pct": 50.0,
+    "esc_thermal_slope_deviation_pct": 50.0
+  },
+  "diagnostics_weights": {
+    "electrical": 0.35,
+    "vibration": 0.40,
+    "thermal": 0.25
+  }
+}

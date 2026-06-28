@@ -1,0 +1,79 @@
+{
+  "healthy": {
+    "title": "Demo 1 — Healthy Propeller",
+    "description": "Install a known-good, balanced propeller. Run the calibration sweep to establish the healthy baseline. All health indices should read green.",
+    "expected_results": {
+      "PBI": "< 0.15 (Normal)",
+      "PLI": "≈ 0.0 (Normal)",
+      "ETI": "< 0.10 (Normal)",
+      "BSI": "< 0.15 (Normal)"
+    },
+    "expected_condition": "No maintenance required."
+  },
+  "imbalance": {
+    "title": "Demo 2 — Propeller Imbalance",
+    "description": "Attach a small strip of tape (~0.5–1 g) to the tip of one propeller blade only. Alternatively, use a propeller with a slightly trimmed blade. The rotational imbalance will generate elevated vibration while current draw changes minimally.",
+    "physical_steps": [
+      "Power off motor before attaching tape.",
+      "Attach tape to tip of ONE blade only.",
+      "Power on and run at 40–60% throttle.",
+      "Observe PBI rise on dashboard."
+    ],
+    "expected_results": {
+      "vibration_deviation": "> +150% to +400%",
+      "current_deviation": "< +10%",
+      "PBI": "> 0.5 (Warning–Critical)"
+    },
+    "expected_condition": "Rotational imbalance detected. Inspect propeller and hub before next flight."
+  },
+  "missing_prop": {
+    "title": "Demo 3 — Missing / Loose Propeller",
+    "description": "Remove the propeller completely. The motor will spin unloaded, drawing dramatically less current and producing very low vibration. This represents a missing propeller, severe thrust loss, or a stripped hub.",
+    "physical_steps": [
+      "Power off motor.",
+      "Remove propeller nut and propeller.",
+      "Power on at same throttle used during calibration.",
+      "Observe PLI drop sharply negative."
+    ],
+    "expected_results": {
+      "current_deviation": "−70% to −95%",
+      "power_deviation": "−70% to −95%",
+      "vibration_deviation": "Reduced",
+      "PLI": "< −0.5 (Critical)"
+    },
+    "expected_condition": "Propulsion load anomaly — possible causes: missing propeller, loose hub, severe thrust loss."
+  },
+  "reduced_cooling": {
+    "title": "Demo 4 — Reduced ESC Cooling",
+    "description": "Temporarily block the airflow path around the ESC using a removable cardboard or foam barrier. DO NOT physically contact the motor or propeller. Maintain safe operating temperatures. Monitor closely and remove barrier immediately if ESC temp exceeds safe limits.",
+    "physical_steps": [
+      "Run motor at 30–50% throttle until ESC temperature stabilizes.",
+      "Carefully place a cardboard barrier blocking airflow around ESC only (never near propeller arc).",
+      "Observe ETI rise over 30–60 seconds.",
+      "Remove barrier immediately if ESC temp approaches 60°C."
+    ],
+    "expected_results": {
+      "esc_temp_deviation": "> +30% above expected for this load",
+      "current_deviation": "≈ 0% (unchanged)",
+      "ETI": "> 0.3 (Warning)"
+    },
+    "expected_condition": "Thermal behaviour abnormal. Possible causes: blocked cooling path, degraded thermal compound, ESC heatsink detachment."
+  },
+  "high_drag": {
+    "title": "Demo 5 — Increased Aerodynamic Load",
+    "description": "Position a removable cardboard or foam drag plate in the propeller outflow stream to increase aerodynamic resistance. The plate must be placed well outside the propeller arc — never close enough to contact rotating blades.",
+    "physical_steps": [
+      "Mount drag plate downstream of propeller outflow, minimum 20 cm from blade tips.",
+      "Run motor at calibrated throttle.",
+      "Observe PLI rise as current and power increase.",
+      "Remove plate when done."
+    ],
+    "expected_results": {
+      "current_deviation": "+20% to +60%",
+      "power_deviation": "+20% to +60%",
+      "vibration_deviation": "≈ Normal",
+      "PLI": "> 0.3 (Warning)"
+    },
+    "expected_condition": "Propulsion load elevated. Possible causes: high aerodynamic drag, strong headwind, mechanical resistance."
+  }
+}

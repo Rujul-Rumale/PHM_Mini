@@ -5,23 +5,17 @@ import logging
 log = logging.getLogger(__name__)
 
 KNOWN_SENSOR_TYPES = {
-    0x40: ("INA226", "Battery Monitor"),
-    0x41: ("INA226", "Propulsion 1"),
+    0x40: ("INA219", "Battery Monitor"),
+    0x41: ("INA219", "Propulsion 1"),
     0x42: ("INA226", "Propulsion 2"),
     0x43: ("INA226", "Propulsion 3"),
     0x44: ("INA226", "Propulsion 4"),
-    0x45: ("INA226", "Propulsion 5"),
-    0x46: ("INA226", "Propulsion 6"),
-    0x47: ("INA226", "Propulsion 7"),
-    0x48: ("INA226", "Propulsion 8"),
+    0x48: ("LM75", "ESC Temperature"),
     0x68: ("MPU6050", "IMU"),
     0x69: ("MPU6050", "IMU (alt)"),
     0x76: ("BME280", "Temperature/Pressure"),
     0x77: ("BME280", "Temperature/Pressure (alt)"),
-    0x48: ("TMP117", "Temperature"),
     0x49: ("TMP117", "Temperature (alt)"),
-    0x4A: ("TMP117", "Temperature (alt)"),
-    0x4B: ("TMP117", "Temperature (alt)"),
 }
 
 I2C_BUS_PATHS = ["/dev/i2c-0", "/dev/i2c-1", "/dev/i2c-2", "/dev/i2c-3", "/dev/i2c-4", "/dev/i2c-5", "/dev/i2c-6", "/dev/i2c-7", "/dev/i2c-8", "/dev/i2c-9", "/dev/i2c-10"]
@@ -138,7 +132,7 @@ class I2CManager:
             if "propulsion_units" in s:
                 for pu in s["propulsion_units"]:
                     uid = pu.get("id", "?")
-                    cs = pu.get("current_sensor")
+                    cs = pu.get("current_sensor", pu.get("esc_current_sensor"))
                     if cs:
                         flat[f"propulsion_{uid}_current"] = cs
                     esc = pu.get("esc_temperature")

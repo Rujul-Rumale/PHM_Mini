@@ -21,8 +21,7 @@ motors:
   warn_current_per_motor: 14.0
   min_current_armed: 0.5
   max_imbalance_ratio: 0.40   # unused for single motor
-  i2c_addresses:
-    - 0x41                    # different from battery — single bus OK
+  i2c_addresses: []           # Empty for single INA (uses battery current fallback)
   shunt_ohms: 0.01
 
 system:

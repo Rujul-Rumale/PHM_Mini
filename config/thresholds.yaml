@@ -1,4 +1,4 @@
-# S500 Quadcopter - Threshold Configuration (3S LiPo)
+# Single Motor Trainer - Threshold Configuration (3S LiPo)
 # All values are SI units unless noted
 
 battery:
@@ -6,41 +6,43 @@ battery:
   nominal_voltage: 11.1           # V (3.7V * cells)
   min_voltage: 9.9                # V (3.3V/cell hard cutoff)
   warn_voltage: 10.5              # V (3.5V/cell warning)
-  max_current: 60.0               # A (system burst limit)
-  warn_current: 45.0              # A (system warning)
+  max_current: 18.0               # A (system burst limit)
+  warn_current: 14.0              # A (system warning)
   max_dv_dt: -1.5                 # V/s (max allowed sag rate)
   soc_warn_percent: 20            # %
   soc_critical_percent: 10        # %
   capacity_mah: 3300              # mAh (for coulomb counting)
   i2c_address: 0x40
-  shunt_ohms: 0.001               # Ohms
-  max_temp: 50                    # °C, battery max safe temp
-  warn_temp: 45                   # °C, battery warning temp
+  shunt_ohms: 0.1                 # 100 mOhm shunt
+  max_temp: 50                    # °C
+  warn_temp: 45                   # °C
 
 motors:
-  count: 4
-  max_current_per_motor: 15.0     # A (A2212 1000KV with 1045 prop on 3S)
-  warn_current_per_motor: 12.0    # A (per motor warning)
-  min_current_armed: 0.5          # A (below this while armed = open circuit / broken prop)
-  max_imbalance_ratio: 0.40       # 40% deviation from mean = fault
-  i2c_addresses:                  # INA226 per motor ESC rail
+  count: 1
+  max_current_per_motor: 15.0     # A
+  warn_current_per_motor: 12.0    # A
+  min_current_armed: 0.5          # A
+  max_imbalance_ratio: 0.40
+  i2c_addresses:
     - 0x41
-    - 0x42
-    - 0x43
-    - 0x44
-  shunt_ohms: 0.01                # Ohms (higher R for low-current measurement accuracy)
+  shunt_ohms: 0.1                 # 100 mOhm shunt
 
 esc:
-  max_temp: 80                    # °C, ESC max safe temp
-  warn_temp: 65                   # °C, ESC warning temp
-  thermal_efficiency_baseline: 2.5  # °C/A, default temp rise per amp
-  thermal_efficiency_critical: 3.75 # °C/A, baseline * 1.5 = critical
+  max_temp: 80                    # °C
+  warn_temp: 65                   # °C
+  thermal_efficiency_baseline: 2.5
+  thermal_efficiency_critical: 3.75
 
 system:
-  fast_loop_ms: 25                # ms (40 Hz — sensor reads, safety, blackbox buffer)
-  health_loop_ms: 1000            # ms (1 Hz — features, diagnostics, health engine)
-  log_interval_ms: 1000           # ms (1 Hz to DB)
-  fault_persistence_count: 3      # consecutive readings before fault declared
-  db_path: "logs/telemetry.db"    # fallback; data/flights/ preferred in deployment
+  frequencies:
+    battery: 50
+    propulsion: 50
+    imu: 50
+    temperature: 5
+  fast_loop_ms: 20                # 50 Hz sensor reading
+  health_loop_ms: 200             # 5 Hz features, diagnostics, health
+  log_interval_ms: 500            # 2 Hz DB logging
+  fault_persistence_count: 3
+  db_path: "data/flights/flight_monitor.db"
   log_level: "INFO"
-  simulate: false                 # set true to use mock sensor data (no hardware needed)
+  simulate: true

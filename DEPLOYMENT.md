@@ -2,7 +2,7 @@
 
 ## Overview
 
-Deploy the UAV Prognostics and Health Management (PHM) system on a Raspberry Pi for real-time fault detection, battery monitoring, and vibration analysis. The system boots headlessly, runs three parallel threads (fast sensor loop, health analysis loop, web dashboard), and stores per-flight telemetry databases.
+Deploy the UAV Prognostics and Health Management (PHM) system on a Raspberry Pi for real-time physics-based fault detection, battery monitoring, and vibration analysis. The system boots headlessly, runs three parallel threads (fast sensor loop, health analysis loop, web dashboard), and stores per-flight telemetry databases.
 
 ## Hardware Requirements
 
@@ -11,66 +11,51 @@ Deploy the UAV Prognostics and Health Management (PHM) system on a Raspberry Pi 
 | Model | Notes |
 |-------|-------|
 | Pi Zero 2 W | Adequate for 1-2 propulsion units |
-| Pi 3 Model B+ | Good for quadcopter (4 units) |
+| Pi 3 Model B+ | Good for single motor setups |
 | Pi 4 Model B | Recommended — 2GB+ RAM |
 | Pi 5 | Overkill but compatible |
 
 ### Required Sensors
 
+This architecture is currently optimized for a single-motor configuration:
+
 | Sensor | Purpose | Interface | Address |
 |--------|---------|-----------|---------|
-| INA226 x2 | Battery voltage/current | I2C | 0x40 (battery) |
-| INA226 xN | Propulsion unit current | I2C | 0x41-0x47 |
-| MPU6050 | IMU / vibration | I2C | 0x68 |
-| (Optional) BME280 | Ambient temp/pressure | I2C | 0x76 |
+| INA219 (or INA226) | Battery Monitor (Voltage/Current) | I2C | 0x40 |
+| INA219 (or INA226) | ESC Monitor (Motor Current) | I2C | 0x41 |
+| LM75 | ESC Thermal Probe | I2C | 0x48 |
+| MPU6050 | Airframe Vibration IMU | I2C | 0x68 |
 
 ### Wiring Diagram
 
-```
-Raspberry Pi                  INA226 (0x40 — Battery)
-┌──────────┐                  ┌──────────┐
-│ Pin 1    │──── 3.3V ────────│ VCC      │
-│ (3.3V)   │                  │          │
-│ Pin 3    │──── SDA1 ────────│ SDA      │
-│ (GPIO 2) │                  │          │
-│ Pin 5    │──── SCL1 ────────│ SCL      │
-│ (GPIO 3) │                  │          │
-│ Pin 6    │──── GND ─────────│ GND      │
-│ (GND)    │                  │          │
-│          │                  │ A0=GND   │
-│          │                  │ A1=GND   │
-└──────────┘                  └──────────┘
+All sensors communicate over the standard Raspberry Pi I2C1 bus. They should be wired in parallel (daisy-chained).
 
-INA226 (0x41 — Propulsion 1)     MPU6050 (0x68 — IMU)
-┌──────────┐                     ┌──────────┐
-│ VCC      │──── 3.3V ──────────│ VCC      │
-│ SDA      │──── SDA1 ──────────│ SDA      │
-│ SCL      │──── SCL1 ──────────│ SCL      │
-│ GND      │──── GND ───────────│ GND      │
-│ A0=VCC   │                     │ AD0=GND  │
-│ A1=GND   │                     └──────────┘
-└──────────┘
 ```
+Raspberry Pi                 Sensors (Parallel Bus)
+┌──────────┐                 ┌────────────────────┐
+│ Pin 1    │──── 3.3V ───────│ VCC (all sensors)  │
+│ (3.3V)   │                 │                    │
+│ Pin 3    │──── SDA1 ───────│ SDA (all sensors)  │
+│ (GPIO 2) │                 │                    │
+│ Pin 5    │──── SCL1 ───────│ SCL (all sensors)  │
+│ (GPIO 3) │                 │                    │
+│ Pin 6    │──── GND ────────│ GND (all sensors)  │
+│ (GND)    │                 │                    │
+└──────────┘                 └────────────────────┘
+```
+
+**Note:** If using 5V logic sensors, connect VCC to Pin 2 (5V), but ensure your Raspberry Pi is protected by a level shifter on the SDA/SCL lines if the sensor modules do not include them.
 
 ### I2C Address Configuration
 
-| Sensor | A1 | A0 | Address |
-|--------|----|----|---------|
-| Battery INA226 | GND | GND | 0x40 |
-| Propulsion 1 INA226 | GND | VCC | 0x41 |
-| Propulsion 2 INA226 | VCC | GND | 0x42 |
-| Propulsion 3 INA226 | VCC | VCC | 0x43 |
-| Propulsion 4 INA226 | GND | SDA | 0x44 |
-| MPU6050 IMU | GND | (AD0=GND) | 0x68 |
+You must solder the address jumpers on your breakout boards to match these specific addresses:
 
-### Shunt Resistor Selection
-
-| Location | Current Range | Shunt Value | Max Drop (@max I) |
-|----------|--------------|-------------|-------------------|
-| Battery rail | 0-80A | 1.0 mΩ | 80 mV (safe) |
-| Motor per-ESC | 0-30A | 10 mΩ | 300 mV (exceeds ±81.92mV! use 2 mΩ) |
-
-**Critical:** INA226 shunt voltage range is ±81.92 mV. Verify: `I_max × R_shunt < 0.08192V`. For 30A motor current, use 2.0 mΩ (60 mV) or lower.
+| Sensor | Jumper Configuration | Target Address |
+|--------|----------------------|----------------|
+| Battery INA219 | Default (No jumpers) | 0x40 |
+| ESC INA219 | Bridge A0 | 0x41 |
+| ESC LM75 | Default (A0, A1, A2 to GND) | 0x48 |
+| MPU6050 IMU | Default (AD0 to GND) | 0x68 |
 
 ## Installation
 
@@ -112,7 +97,9 @@ sudo systemctl start uav-phm
 sudo systemctl restart uav-phm
 ```
 
-## Calibration Procedure
+## Calibration Procedure (Required)
+
+Because the system uses Physics-Based PHM indices, it must learn the baseline of your specific hardware.
 
 ### 1. Verify I2C Detection
 
@@ -120,214 +107,47 @@ sudo systemctl restart uav-phm
 i2cdetect -y 1
 ```
 
-Expected output:
-```
-     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-00:          -- -- -- -- -- -- -- -- -- -- -- -- --
-10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-40: 40 41 -- -- -- -- -- -- -- -- -- -- -- -- -- --
-50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-60: -- -- -- -- -- -- -- -- -- -- 68 -- -- -- -- --
-70: -- -- -- -- -- -- -- --
-```
+Expected output should show `40`, `41`, `48`, and `68`.
 
-### 2. Configure hardware.json
+### 2. Configure Hardware Setup
 
-Edit `config/hardware.json` to match your actual sensor addresses:
+Ensure `config/hardware.json` reflects your exact shunt resistor values for the INA219s. Do not hardcode these in Python.
 
-```json
-{
-    "i2c_bus": 1,
-    "sensors": {
-        "battery_monitor": {
-            "type": "INA226",
-            "address": "0x40",
-            "shunt": 0.001
-        },
-        "propulsion_units": [
-            {
-                "id": 1,
-                "current_sensor": {
-                    "type": "INA226",
-                    "address": "0x41",
-                    "shunt": 0.01
-                },
-                "esc_temperature": null
-            }
-        ],
-        "imu": {
-            "type": "MPU6050",
-            "address": "0x68"
-        }
-    }
-}
-```
+### 3. Baseline Calibration via Web UI
 
-### 3. Baseline Calibration
+1. Open the dashboard at `http://<pi-ip>:5000`
+2. Mount a completely healthy, balanced propeller.
+3. Navigate to the **Health** tab.
+4. Click **▶ Start Calibration**.
+5. Following the on-screen instructions, use the throttle slider to sweep from 0% to 100% in ~10% increments.
+6. The system will collect data and save the fingerprint to `config/baseline.json`.
 
-```bash
-# Run in hardware mode to collect baseline data
-sudo venv/bin/python monitor.py --hardware
-```
+## Dashboard & Endpoints
 
-Let the system run for 30-60 seconds at idle, then at several throttle points. The baseline is saved to `config/baseline.json`.
+Access the web dashboard at: `http://<raspberry-pi-ip>:5000`
 
-## Service Management
-
-### systemd Commands
-
-```bash
-# View status
-sudo systemctl status uav-phm
-
-# Start on boot (enabled by default)
-sudo systemctl enable uav-phm
-
-# Disable auto-start
-sudo systemctl disable uav-phm
-
-# View logs
-journalctl -u uav-phm -f --since "5 minutes ago"
-
-# Reset service after config change
-sudo systemctl restart uav-phm
-```
-
-### Manual Run
-
-```bash
-# Hardware mode (requires sensors)
-cd /home/pi/drone_monitor
-venv/bin/python monitor.py --hardware
-
-# Simulation mode (no hardware needed)
-venv/bin/python monitor.py --simulate
-
-# Custom config
-venv/bin/python monitor.py --hardware --config config/fixed-wing.yaml
-
-# With fault injection (simulate only)
-venv/bin/python monitor.py --simulate --fault "battery-aging,prop-damage"
-```
-
-## Startup Banner
-
-When the system starts successfully, you will see:
-
-```
-================================
-
-UAV PHM SYSTEM ONLINE
-
-Mode:
-HARDWARE
-
-Vehicle:
-Quad
-
-Propulsion Units:
-4 (front_left, front_right, rear_left, rear_right)
-
-Battery Monitor:
-ONLINE
-
-Current Sensors:
-4 connected
-
-IMU:
-ONLINE
-
-Health Engine:
-READY
-
-Features:
-  Battery:        ON
-  Current Sense:  ON
-  Vibration:      ON
-  Temperature:    OFF
-
-Dashboard:
-http://<host>:5000
-
-Flight ID:
-001
-
-================================
-```
-
-## Dashboard
-
-Access the web dashboard at:
-
-```
-http://<raspberry-pi-ip>:5000
-```
-
-### API Endpoints
+### Key API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/` | Dashboard HTML |
-| GET | `/api/latest` | Current sensor readings + status |
-| GET | `/api/system` | Pi health (CPU, RAM, disk, uptime) |
-| GET | `/api/health` | Health scores |
-| GET | `/api/diagnostics` | Active diagnoses |
-| GET | `/api/prediction` | Predicted failures |
-| GET | `/api/telemetry` | Telemetry history |
-| GET | `/api/faults` | Active faults |
-| GET | `/api/fault_events` | Fault event timeline |
-| POST | `/api/arm` | Arm system |
-| POST | `/api/disarm` | Disarm system |
-| POST | `/api/throttle` | Set throttle (simulate only) |
+| GET | `/api/v1/status` | Realtime raw telemetry and high-level states |
+| GET | `/api/v1/phm` | Realtime PHM health indices and conditions |
+| GET | `/api/v1/phm/history` | Cross-flight historical trend |
+| POST | `/api/v1/calibrate` | Trigger the calibration routine |
 
 ## Data Storage
 
 ```
 data/
-├── flights/              # Per-boot flight databases
+├── flights/              # Per-boot flight SQLite databases
 │   ├── flight_001.db     # Telemetry, faults, health
 │   ├── flight_002.db
 │   └── ...
-├── blackbox/             # Fault event recordings (30s pre + 30s post)
-│   ├── fault_0000_battery_over_current_1700000000.json
-│   └── ...
+├── blackbox/             # Fault event recordings
 └── baselines/            # Calibration profiles
-    └── last_state.json   # Last shutdown state
 ```
 
 Each boot creates a new flight database with an incrementing ID. Existing flight logs are never overwritten.
-
-## System Architecture
-
-### Thread Model
-
-| Thread | Priority | Rate | Tasks |
-|--------|----------|------|-------|
-| **fast_loop** | Highest | 40 Hz | Sensor reads, safety thresholds, blackbox ring buffer |
-| **health_loop** | Medium | 1 Hz | Feature extraction, diagnostics, health engine, DB |
-| **web_server** | Low | on-demand | Flask dashboard, serves /api/* |
-
-### Graceful Degradation
-
-When a sensor fails:
-
-1. First failure → log warning, retry
-2. 3 consecutive failures → mark sensor as "degraded"
-3. Disable diagnostics that depend on the failed sensor
-4. System continues with reduced capabilities
-
-Example: IMU lost:
-- Disabled: vibration analysis
-- Kept: battery monitoring, current monitoring
-
-### Safe Shutdown
-
-On shutdown (CTRL+C, systemctl stop, power loss risk):
-1. Flush SQLite database
-2. Save current health state to `data/baselines/last_state.json`
-3. Close I2C bus handles
 
 ## Troubleshooting
 
@@ -338,39 +158,11 @@ On shutdown (CTRL+C, systemctl stop, power loss risk):
 ls /dev/i2c*
 # Expected: /dev/i2c-1
 
-# Check kernel module
-lsmod | grep i2c
-
 # Enable manually
 sudo raspi-config  → Interface Options → I2C → Enable
 
-# Check permissions
-sudo usermod -a -G i2c pi
-# Log out and back in
-```
-
-### Permission Denied on I2C
-
-```bash
 # Add pi user to i2c group
-sudo usermod -a -G i2c $USER
-# Reboot or re-login
-```
-
-### Service Fails to Start
-
-```bash
-# Check logs
-journalctl -u uav-phm -n 50 --no-pager
-
-# Common issues:
-# 1. Working directory wrong — edit deploy/uav-phm.service
-# 2. I2C permissions — ensure pi in i2c group
-# 3. Missing dependencies — re-run install.sh
-
-# Run manually to see errors
-cd /home/pi/drone_monitor
-sudo venv/bin/python monitor.py --hardware
+sudo usermod -a -G i2c pi
 ```
 
 ### No Sensors Detected
@@ -382,35 +174,4 @@ i2cdetect -y 1
 # Check wiring
 # - All sensors share SDA, SCL, 3.3V, GND
 # - Each sensor has unique address (A0/A1 pins)
-
-# Check hardware.json matches actual addresses
-cat config/hardware.json
 ```
-
-### Database Too Large
-
-Flight databases are stored per-session in `data/flights/`. To free space:
-```bash
-# List flight databases with sizes
-ls -lh data/flights/
-
-# Archive or delete old flights
-rm data/flights/flight_001.db
-```
-
-## Development / Testing
-
-```bash
-# Run with mock sensors (no hardware)
-python3 monitor.py --simulate
-
-# Run with specific fault injection
-python3 monitor.py --simulate --fault "prop-loss,battery-aging"
-
-# Run tests
-python3 -m pytest tests/
-```
-
-## License
-
-Proprietary — UAV PHM Monitor

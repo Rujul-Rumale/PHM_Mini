@@ -1,0 +1,7 @@
+{
+  "poll_rate_ms": 250,
+  "chart_window_size": 100,
+  "visible_tabs": ["MONITOR", "HEALTH", "SYSTEM"],
+  "theme": "dark",
+  "alerts_enabled": true
+}

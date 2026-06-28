@@ -35,9 +35,13 @@ class PropulsionFeatures:
     current_variance: float
     current_trend: float
     spike_count: int
+    imbalance_ratio: float = 0.0
 
     def to_dict(self):
         return asdict(self)
+
+# Compatibility Alias for older tests
+ElectricalMotorFeatures = PropulsionFeatures
 
 
 @dataclass
@@ -46,8 +50,17 @@ class ThermalFeatures:
     ambient_temp: float = 25.0
     temp_rise: list[float] = field(default_factory=list)
 
+    @property
+    def motor_temps(self):
+        return self.temps
+
+    @property
+    def temp_rise_per_amp(self):
+        return self.temp_rise
+
     def to_dict(self):
         return asdict(self)
+
 
 
 @dataclass
@@ -57,6 +70,10 @@ class VibrationFeatures:
     kurtosis: Optional[float] = None
     peak_freq: Optional[float] = None
     spectral_energy: Optional[float] = None
+
+    @property
+    def motor_id(self):
+        return self.unit_id
 
     def to_dict(self):
         return asdict(self)
@@ -82,10 +99,11 @@ def _kurtosis(values: list) -> float:
 
 
 class FeatureExtractor:
-    def __init__(self, n_units: int = 4):
-        self._n_units = n_units
+    def __init__(self, n_units: int = 4, motor_count: Optional[int] = None):
+        n = motor_count if motor_count is not None else n_units
+        self._n_units = n
         self._current_windows: List[deque] = [
-            deque(maxlen=WINDOW) for _ in range(n_units)
+            deque(maxlen=WINDOW) for _ in range(n)
         ]
         self._batt_v_window: deque = deque(maxlen=WINDOW)
         self._batt_i_window: deque = deque(maxlen=WINDOW)
@@ -147,8 +165,12 @@ class FeatureExtractor:
             std = math.sqrt(variance)
             trend = _linear_slope(win_list)
             win_mean = statistics.mean(win_list)
-            spike_threshold = win_mean + 3 * std
+            spike_threshold = win_mean + 3 * std if std > 0 else win_mean + 1.0
             spikes = sum(1 for v in win_list if v > spike_threshold)
+
+            imbalance = 0.0
+            if mean_i > 0:
+                imbalance = abs(current - mean_i) / mean_i
 
             features.append(PropulsionFeatures(
                 unit_id=idx + 1,
@@ -156,6 +178,7 @@ class FeatureExtractor:
                 current_variance=round(variance, 6),
                 current_trend=round(trend, 6),
                 spike_count=spikes,
+                imbalance_ratio=round(imbalance, 4),
             ))
 
         return features
@@ -209,3 +232,17 @@ class FeatureExtractor:
             peak_freq=round(peak_freq, 2) if peak_freq else None,
             spectral_energy=round(spectral_energy, 2) if spectral_energy else None,
         )
+
+    # Legacy method compatibility wrappers
+    def electrical_features(self, voltage: float, current: float, power: float,
+                            motor_currents: list) -> tuple[ElectricalBatteryFeatures, list[PropulsionFeatures]]:
+        batt = self.electrical_battery(voltage, current, power)
+        motors = self.propulsion_currents(motor_currents)
+        return batt, motors
+
+    def thermal_features(self, temps: list[float], ambient: float = 25.0) -> ThermalFeatures:
+        return self.thermal(temps, ambient)
+
+    def vibration_features(self, motor_id: int, accel_samples: list[float],
+                           sample_rate_hz: float = 100.0) -> Optional[VibrationFeatures]:
+        return self.vibration(motor_id, accel_samples, sample_rate_hz)

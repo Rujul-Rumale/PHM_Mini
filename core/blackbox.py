@@ -3,14 +3,14 @@ import os
 import time
 import logging
 from collections import deque
-from dataclasses import dataclass, asdict, field
+from dataclasses import dataclass, asdict
 from typing import Optional
 
 logger = logging.getLogger(__name__)
 
 BLACKBOX_DIR = "data/blackbox"
-DEFAULT_MAX_SAMPLES = 1500
-POST_EVENT_SECONDS = 30
+DEFAULT_MAX_SAMPLES = 3000  # 60s at 50Hz
+POST_EVENT_SECONDS = 30.0
 MAX_EVENTS = 200
 
 
@@ -46,7 +46,7 @@ class Blackbox:
         self.directory = directory
         self.max_samples = max_samples
         self._ring = deque(maxlen=max_samples)
-        self._post_ring = deque(maxlen=int(POST_EVENT_SECONDS * 40))
+        self._post_ring = deque(maxlen=int(POST_EVENT_SECONDS * 100)) # oversized to avoid truncation
         self._events: list[FaultEvent] = []
         self._event_id = 0
         self._recording_after = False
@@ -72,11 +72,16 @@ class Blackbox:
 
     def save_fault_event(self, component: str, fault_type: str,
                          confidence: float, severity: str, evidence: dict) -> Optional[FaultEvent]:
+        # Capture the before snapshot: slice exactly the last 30 seconds of samples from the 60s ring buffer
+        now = time.time()
+        cutoff_time = now - 30.0
+        
         before = list(self._ring)
-        snapshot = [asdict(s) for s in before] if before else None
+        before_sliced = [s for s in before if s.timestamp >= cutoff_time]
+        snapshot = [asdict(s) for s in before_sliced] if before_sliced else None
 
         event = FaultEvent(
-            timestamp=time.time(),
+            timestamp=now,
             component=component, fault_type=fault_type,
             confidence=confidence, severity=severity,
             evidence=evidence, before_snapshot=snapshot,
@@ -87,8 +92,7 @@ class Blackbox:
         self._after_start = event.timestamp
         self._post_ring.clear()
 
-        logger.info("Fault event: %s/%s (conf=%.2f, sev=%s) — recording 30s post-event",
-                    component, fault_type, confidence, severity)
+        logger.info(f"Blackbox Fault Event: {component}/{fault_type} triggered. Sliced {len(before_sliced)} pre-samples. Recording 30s post-event.")
         return event
 
     def _finalize_after_event(self):
@@ -102,12 +106,13 @@ class Blackbox:
 
         filename = f"fault_{self._event_id:04d}_{event.component}_{event.fault_type}_{int(event.timestamp)}.json"
         filepath = os.path.join(self.directory, filename)
-        with open(filepath, "w") as f:
-            json.dump(event.to_dict(), f, indent=2)
-        self._event_id += 1
-        logger.info("Fault event saved to %s (%d pre + %d post samples)",
-                    filepath, len(event.before_snapshot or []),
-                    len(event.after_snapshot or []))
+        try:
+            with open(filepath, "w") as f:
+                json.dump(event.to_dict(), f, indent=2)
+            self._event_id += 1
+            logger.info(f"Fault blackbox file successfully saved: {filepath} ({len(event.before_snapshot or [])} pre + {len(event.after_snapshot or [])} post samples)")
+        except Exception as e:
+            logger.error(f"Failed to write fault blackbox file: {e}")
 
         if len(self._events) > MAX_EVENTS:
             self._events = self._events[-MAX_EVENTS:]

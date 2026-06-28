@@ -1,22 +1,27 @@
 {
-    "vehicle_type": "quad",
-    "battery": {
-        "cell_count": 3,
-        "capacity_mah": 3300
-    },
-    "propulsion_units": [
-        {"id": 1, "name": "front_left"},
-        {"id": 2, "name": "front_right"},
-        {"id": 3, "name": "rear_left"},
-        {"id": 4, "name": "rear_right"}
-    ],
-    "features": {
-        "enable_motor_balance": true,
-        "enable_efficiency_tracking": false
-    },
-    "simulation": {
-        "motor_imax": 15.0,
-        "motor_i0": 0.45,
-        "r_int": 0.015
-    }
+  "vehicle_type": "fixed-wing",
+  "battery": {
+    "cell_count": 3,
+    "capacity_mah": 3300,
+    "nominal_voltage": 11.1
+  },
+  "propulsion_units": [
+    { "id": 1, "name": "main_motor" }
+  ],
+  "features": {
+    "enable_motor_balance": false,
+    "enable_efficiency_tracking": true
+  },
+  "simulation": {
+    "motor_imax": 15.0,
+    "motor_i0": 0.45,
+    "r_int": 0.015
+  },
+  "throttle": {
+    "max_percent": 80,
+    "ramp_rate_per_sec": 20.0
+  },
+  "safety": {
+    "deadman_timeout_sec": 10.0
+  }
 }

@@ -4,11 +4,13 @@ import logging
 
 from hardware.i2c_manager import I2CManager
 from hardware.platform import is_raspberry_pi
+from sensors import make_current_sensor, make_temperature_sensor
 
 log = logging.getLogger(__name__)
 
 
 class SensorManager:
+    """Manages physical I2C and simulated sensors dynamically based on config."""
     def __init__(self, config_path: str = "config/hardware.json"):
         self._config_path = config_path
         self._config = self._load_config()
@@ -54,48 +56,91 @@ class SensorManager:
             "vibration": True,
             "temperature": True,
         }
-        from sensors.ina226 import MockINA226
         n_units = len(profile.get("propulsion_units", [])) if profile else 1
         bc = profile.get("battery", {}) if profile else {}
         sc = profile.get("simulation", {}) if profile else {}
-        cell_count = bc.get("cell_count", 4)
-        nominal_v = bc.get("nominal_voltage", 14.8)
+        cell_count = bc.get("cell_count", 3)
+        nominal_v = bc.get("nominal_voltage", 11.1)
         motor_imax = sc.get("motor_imax", 15.0)
         motor_i0 = sc.get("motor_i0", 0.45)
         batt_imax = motor_imax * max(n_units, 1) + 2.0
 
-        self._battery = MockINA226(
-            base_voltage=nominal_v, base_current=batt_imax,
-            label="battery", cell_count=cell_count,
-            r_int=sc.get("r_int", 0.015),
-        )
+        # Check config type for battery monitor
+        s_cfg = self._config.get("sensors", {})
+        batt_type = s_cfg.get("battery_monitor", {}).get("type", "INA219")
+        
+        if batt_type == "INA219":
+            from sensors.ina219 import MockINA219
+            self._battery = MockINA219(
+                base_voltage=nominal_v, base_current=batt_imax,
+                label="battery", cell_count=cell_count,
+                r_int=sc.get("r_int", 0.015),
+            )
+        else:
+            from sensors.ina226 import MockINA226
+            self._battery = MockINA226(
+                base_voltage=nominal_v, base_current=batt_imax,
+                label="battery", cell_count=cell_count,
+                r_int=sc.get("r_int", 0.015),
+            )
         self._battery.begin()
 
-        for i in range(n_units):
-            s = MockINA226(
-                base_voltage=nominal_v * 0.95, base_current=motor_imax,
-                label=f"motor_{i}", no_load_i=motor_i0, motor_imax=motor_imax,
-            )
-            s.begin()
-            self._current_sensors.append(s)
+        # Check config type for propulsion current
+        prop_units = s_cfg.get("propulsion_units", [])
+        
+        # Check if single INA configuration is used
+        motor_addrs = self._config.get("motors", {}).get("i2c_addresses", [])
+        if motor_addrs:
+            for i in range(n_units):
+                ptype = "INA219"
+                if i < len(prop_units):
+                    ptype = prop_units[i].get("current_sensor", prop_units[i].get("esc_current_sensor", {})).get("type", "INA219")
+                    
+                if ptype == "INA219":
+                    from sensors.ina219 import MockINA219
+                    s = MockINA219(
+                        base_voltage=nominal_v * 0.95, base_current=motor_imax,
+                        label=f"motor_{i}", no_load_i=motor_i0, motor_imax=motor_imax,
+                    )
+                else:
+                    from sensors.ina226 import MockINA226
+                    s = MockINA226(
+                        base_voltage=nominal_v * 0.95, base_current=motor_imax,
+                        label=f"motor_{i}", no_load_i=motor_i0, motor_imax=motor_imax,
+                    )
+                s.begin()
+                self._current_sensors.append(s)
+
+        # Mock temperature sensor (first ESC or Battery fallback)
+        temp_ref_sensor = self._current_sensors[0] if self._current_sensors else self._battery
+        if temp_ref_sensor:
+            from sensors.lm75 import MockLM75
+            t_sensor = MockLM75(temp_ref_sensor)
+            t_sensor.begin()
+            self._temperature_sensors.append(t_sensor)
+
+        # Mock IMU
+        from sensors.mpu6050 import MockMPU6050
+        self._imu = MockMPU6050()
+        self._imu.begin()
 
         log.info("Simulation sensors initialized for %d units", n_units)
         return self.get_status()
 
     def _init_battery(self):
         found = self._scan_results.get("found", {})
-        miss = self._scan_results.get("missing", {})
         if "battery_monitor" in found:
             addr = found["battery_monitor"]["address"]
             cfg = found["battery_monitor"]["config"]
-            shunt = cfg.get("shunt", 0.001)
+            sensor_type = cfg.get("type", "INA219")
+            shunt = cfg.get("shunt_ohms", cfg.get("shunt", 0.1))
+            max_amps = cfg.get("max_amps", 16.0)
             try:
                 import smbus2
                 bus = smbus2.SMBus(int(self._config.get("i2c_bus", 1)))
-                from sensors.ina226 import INA226
-                self._battery = INA226(bus, addr, shunt)
+                self._battery = make_current_sensor(sensor_type, bus, addr, shunt, max_amps)
                 self._battery.begin()
-                log.info("Battery monitor online at 0x%02X", addr)
+                log.info(f"Battery monitor ({sensor_type}) online at 0x{addr:02X}")
             except Exception as e:
                 log.error("Failed to init battery monitor: %s", e)
                 self._enabled_features["battery_monitor"] = False
@@ -104,7 +149,6 @@ class SensorManager:
             self._enabled_features["battery_monitor"] = False
 
     def _init_current_sensors(self):
-        from sensors.ina226 import INA226, MockINA226
         import smbus2
         found = self._scan_results.get("found", {})
         bus = smbus2.SMBus(int(self._config.get("i2c_bus", 1)))
@@ -112,12 +156,14 @@ class SensorManager:
             if name.startswith("propulsion_") and "current" in name:
                 addr = info["address"]
                 cfg = info["config"]
-                shunt = cfg.get("shunt", 0.01)
+                sensor_type = cfg.get("type", "INA219")
+                shunt = cfg.get("shunt_ohms", cfg.get("shunt", 0.1))
+                max_amps = cfg.get("max_amps", 16.0)
                 try:
-                    s = INA226(bus, addr, shunt)
+                    s = make_current_sensor(sensor_type, bus, addr, shunt, max_amps)
                     s.begin()
                     self._current_sensors.append(s)
-                    log.info("Current sensor at 0x%02X online", addr)
+                    log.info(f"Current sensor ({sensor_type}) at 0x{addr:02X} online")
                 except Exception as e:
                     log.error("Failed to init current sensor at 0x%02X: %s", addr, e)
         if not self._current_sensors:
@@ -149,7 +195,22 @@ class SensorManager:
             self._enabled_features["vibration"] = False
 
     def _init_temperature(self):
-        self._enabled_features["temperature"] = bool(self._temperature_sensors)
+        import smbus2
+        found = self._scan_results.get("found", {})
+        bus = smbus2.SMBus(int(self._config.get("i2c_bus", 1)))
+        for name, info in found.items():
+            if "esc_temp" in name:
+                addr = info["address"]
+                cfg = info["config"]
+                sensor_type = cfg.get("type", "LM75")
+                try:
+                    s = make_temperature_sensor(sensor_type, bus, addr)
+                    s.begin()
+                    self._temperature_sensors.append(s)
+                    log.info(f"ESC Temperature sensor ({sensor_type}) at 0x{addr:02X} online")
+                except Exception as e:
+                    log.error(f"Failed to init temperature sensor at 0x{addr:02X}: {e}")
+        self._enabled_features["temperature"] = len(self._temperature_sensors) > 0
 
     def get_battery(self):
         return self._battery
@@ -159,6 +220,9 @@ class SensorManager:
 
     def get_imu(self):
         return self._imu
+
+    def get_temperature_sensors(self):
+        return self._temperature_sensors
 
     def get_enabled_features(self) -> dict:
         return dict(self._enabled_features)
