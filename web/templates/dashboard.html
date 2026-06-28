@@ -437,10 +437,12 @@
         <div style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;">
           Procedure: Install a healthy, balanced propeller. Set throttle slider to each step (0%→100%) and hold for ~5s. System records 3 runs automatically.
         </div>
-        <div style="display:flex;gap:8px;">
+        <div style="display:flex;gap:8px;margin-bottom:16px;">
           <button id="btn-cal-start" class="btn" onclick="startCalibration()" style="flex:1;padding:10px;">▶ Start Calibration</button>
           <button id="btn-cal-cancel" class="btn btn-disarm" onclick="cancelCalibration()" style="display:none;flex:1;padding:10px;">✕ Cancel</button>
         </div>
+        <div class="card-title">Baseline Throttle Curve (Current / Vib)</div>
+        <div class="canvas-wrap"><canvas id="chart-throttle-curve"></canvas></div>
       </div>
 
       <!-- Cross-Flight Index Trend -->
@@ -871,6 +873,44 @@ async function loadConfigEditor() {
 }
 
 let chartFlights = null;
+let chartThrottleCurve = null;
+
+function renderThrottleCurve(info) {
+  if (!info || !info.calibrated || !info.data) return;
+  const steps = info.throttle_steps || [];
+  const currentData = steps.map(s => {
+    const st = info.data[s.toString()];
+    return st && st.esc_current ? st.esc_current.mean : 0;
+  });
+  const vibData = steps.map(s => {
+    const st = info.data[s.toString()];
+    return st && st.vibration_rms ? st.vibration_rms.mean : 0;
+  });
+  
+  const ctx = document.getElementById('chart-throttle-curve');
+  if (!ctx) return;
+  
+  if (chartThrottleCurve) chartThrottleCurve.destroy();
+  chartThrottleCurve = new Chart(ctx.getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: steps.map(s => s + '%'),
+      datasets: [
+        { label: 'Expected Current (A)', data: currentData, borderColor: '#10b981', yAxisID: 'y' },
+        { label: 'Expected Vib (g)', data: vibData, borderColor: '#3b82f6', yAxisID: 'y1' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        y: { position: 'left', grid: { color: '#242f47' }, ticks: { color: '#94a3b8' } },
+        y1: { position: 'right', grid: { display: false }, ticks: { color: '#94a3b8' } },
+        x: { grid: { color: '#242f47' }, ticks: { color: '#94a3b8' } }
+      },
+      plugins: { legend: { labels: { color: '#94a3b8' } } }
+    }
+  });
+}
 
 async function pollPHM() {
   try {
@@ -983,6 +1023,7 @@ function updateCalibrationStatus(info) {
     statusLine.style.borderColor = 'rgba(16,185,129,0.25)';
     statusLine.innerHTML = `<div style="font-weight:600;color:#34d399;margin-bottom:2px;">✅ Calibrated</div>
       <div style="font-size:12px;color:var(--text-secondary);">Runs: ${info.n_runs} · Date: ${dt}</div>`;
+    renderThrottleCurve(info);
   }
 }
 
