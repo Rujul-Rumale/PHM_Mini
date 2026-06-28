@@ -10,7 +10,6 @@ The current architecture is designed for a single-motor propulsion unit monitore
 
 *   **1x INA219 (or INA226) Current/Voltage Monitor:**
     *   Battery & ESC Monitor (`0x40`): Measures total pack voltage and current (motor draws ~99% of total current).
-*   **1x LM75 Temperature Sensor (`0x48`):** Measures ESC/heatsink temperature.
 *   **1x MPU6050 IMU (`0x68`):** Mounted on the motor base to measure high-frequency vibration.
 
 ## Core Concepts: Physics-Based Health Indices

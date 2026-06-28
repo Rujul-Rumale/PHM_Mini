@@ -9,17 +9,7 @@
     },
     "propulsion_units": [
       {
-        "id": 1,
-        "esc_current_sensor": {
-          "type": "INA219",
-          "address": "0x41",
-          "shunt_ohms": 0.1,
-          "max_amps": 5.0
-        },
-        "esc_temperature": {
-          "type": "LM75",
-          "address": "0x48"
-        }
+        "id": 1
       }
     ],
     "imu": {

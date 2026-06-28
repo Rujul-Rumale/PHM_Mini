@@ -19,12 +19,11 @@ Deploy the UAV Prognostics and Health Management (PHM) system on a Raspberry Pi 
 
 This architecture is currently optimized for a single-motor configuration:
 
-| Sensor | Purpose | Interface | Address |
-|--------|---------|-----------|---------|
+| **Sensor / Module** | **Purpose** | **Interface** | **Address / Pin** |
+| :--- | :--- | :--- | :--- |
 | INA219 (or INA226) | Battery Monitor (Voltage/Current) | I2C | 0x40 |
 | INA219 (or INA226) | ESC Monitor (Motor Current) | I2C | 0x41 |
-| LM75 | ESC Thermal Probe | I2C | 0x48 |
-| MPU6050 | Airframe Vibration IMU | I2C | 0x68 |
+| MPU6050 | Airframe / Motor Vibration | I2C | 0x68 |
 
 ### Wiring Diagram
 

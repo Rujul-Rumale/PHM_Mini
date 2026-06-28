@@ -111,13 +111,7 @@ class SensorManager:
                 s.begin()
                 self._current_sensors.append(s)
 
-        # Mock temperature sensor (first ESC or Battery fallback)
-        temp_ref_sensor = self._current_sensors[0] if self._current_sensors else self._battery
-        if temp_ref_sensor:
-            from sensors.lm75 import MockLM75
-            t_sensor = MockLM75(temp_ref_sensor)
-            t_sensor.begin()
-            self._temperature_sensors.append(t_sensor)
+        # Mock temperature sensor removed (Hardware Short Circuit Incident)
 
         # Mock IMU
         from sensors.mpu6050 import MockMPU6050

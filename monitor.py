@@ -294,7 +294,6 @@ Vehicle: {state.get('vehicle_type', 'fixed-wing').upper()}    Flight: {state['sy
 Hardware
   {'✓' if sensors.get('battery') == 'ONLINE' else '✗'} Battery Monitor    INA219 @ 0x40
   {'✓' if str(sensors.get('propulsion_current', '')).startswith('ONLINE') else '✗'} ESC Supply Current INA219 (Shared)
-  {'✓' if sensors.get('esc_temperature') == 'ONLINE' else '✗'} ESC Temperature    LM75   @ 0x48
   {'✓' if sensors.get('imu') == 'ONLINE' else '✗'} Airframe IMU       MPU6050@ 0x68
 
 Throttle Source: {self.throttle_ctrl.provider.source_type.title()}
