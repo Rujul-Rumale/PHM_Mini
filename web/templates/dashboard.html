@@ -807,8 +807,8 @@ async function poll() {
     // Pi Metrics
     const sh = d.system_health || {};
     document.getElementById('pi-cpu').textContent = sh.cpu_temp_c != null ? sh.cpu_temp_c.toFixed(1) : '--';
-    document.getElementById('pi-ram').textContent = sh.ram ? sh.ram.percent.toFixed(0) : '--';
-    document.getElementById('pi-disk').textContent = sh.disk ? sh.disk.percent.toFixed(0) : '--';
+    document.getElementById('pi-ram').textContent = sh.ram && sh.ram.percent != null ? sh.ram.percent.toFixed(0) : '--';
+    document.getElementById('pi-disk').textContent = sh.disk && sh.disk.percent != null ? sh.disk.percent.toFixed(0) : '--';
     const uptime = sh.uptime_s || 0;
     const hrs = Math.floor(uptime / 3600);
     const mins = Math.floor((uptime % 3600) / 60);

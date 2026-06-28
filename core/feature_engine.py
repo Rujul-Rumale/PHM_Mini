@@ -24,7 +24,7 @@ class FeatureEngine:
         from core.monitor_service import SensorFrameReady
         self.event_bus.subscribe(SensorFrameReady, self._on_sensor_frame)
 
-    def _on_sensor_frame(self, event: SensorFrameReady):
+    def _on_sensor_frame(self, event: "SensorFrameReady"):
         frame = event.frame
         now = frame.timestamp
         
