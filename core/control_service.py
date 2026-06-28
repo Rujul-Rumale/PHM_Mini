@@ -55,7 +55,7 @@ class ControlService:
         sensors = state["sensor_status"]
         if sensors.get("battery") != "ONLINE":
             return False, "Arming rejected: Battery monitor is offline or in error"
-        if sensors.get("propulsion_current") != "ONLINE":
+        if not str(sensors.get("propulsion_current", "")).startswith("ONLINE"):
             return False, "Arming rejected: ESC current sensor is offline or in error"
         if sensors.get("imu") != "ONLINE":
             # IMU optional check (ground/bench mode can waive this, but flight mode requires it)

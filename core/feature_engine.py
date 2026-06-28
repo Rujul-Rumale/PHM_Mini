@@ -51,7 +51,7 @@ class FeatureEngine:
 
         # 2. Compute Propulsion Features (single-motor rail)
         prop_feats = []
-        if frame.esc_current_quality == "ONLINE":
+        if str(frame.esc_current_quality).startswith("ONLINE"):
             prop_feats = self.extractor.propulsion_currents([frame.esc_current])
             
         # 3. Compute Thermal Features
