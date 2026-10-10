@@ -66,3 +66,7 @@ Because the PHM engine relies on detecting *deviations*, it must first learn wha
 *   To run the test suite: `pytest tests/ -v`
 *   Shunt resistor configuration should *not* be hardcoded; it is dynamically loaded from `hardware.json`.
 *   Cross-flight health trends are logged to local SQLite databases per flight (`flight_health_indices` table).
+
+## License
+
+Released under the MIT License. Copyright (c) 2026 Rujul Rumale. See [LICENSE](LICENSE).
