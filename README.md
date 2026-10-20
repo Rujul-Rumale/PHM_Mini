@@ -73,4 +73,4 @@ Released under the MIT License. Copyright (c) 2026 Rujul Rumale. See [LICENSE](L
 
 ---
 
-![Views](https://komarev.com/ghpvc/?username=Rujul-Rumale&repo=PHM_Mini&label=Views&color=0e75b6)
+![Views](https://hits.sh/github.com/Rujul-Rumale/PHM_Mini.svg?style=flat-square&label=views&color=0e75b6&labelColor=555)
