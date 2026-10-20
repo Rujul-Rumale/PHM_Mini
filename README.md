@@ -70,3 +70,7 @@ Because the PHM engine relies on detecting *deviations*, it must first learn wha
 ## License
 
 Released under the MIT License. Copyright (c) 2026 Rujul Rumale. See [LICENSE](LICENSE).
+
+---
+
+![Views](https://komarev.com/ghpvc/?username=Rujul-Rumale&repo=PHM_Mini&label=Views&color=0e75b6)
